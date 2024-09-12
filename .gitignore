@@ -1,0 +1,6 @@
+.env
+__pycache__
+venv
+
+# Dummy data for testing
+populate_db.sql
