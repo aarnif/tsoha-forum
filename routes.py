@@ -10,9 +10,34 @@ def index():
     return redirect("/login")
 
 # User routes
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    return "User registration page, NOT IMPLEMENTED YET!"
+@app.route("/register", methods=["GET"])
+def register_get():
+    return render_template("register.html")
+
+@app.route("/register", methods=["POST"])
+def register_post():
+    username = request.form["username"]
+    if len(username) < 4 or len(username) > 20:
+        return render_template("register.html", message="Tunnuksen tulee olla 4-20 merkkiä pitkä!")
+    
+    if users.check_if_user_exists(username):
+        return render_template("register.html", message="Käyttäjätunnus on jo käytössä!")
+
+    password = request.form["password"]
+    confirm_password = request.form["confirm-password"]
+    role = request.form["role"]
+
+    if len(password) < 6:
+        return render_template("register.html", message="Salasanan tulee olla vähintään 6 merkkiä pitkä!")
+    
+    if password != confirm_password:
+        return render_template("register.html", message="Salasanat eivät täsmää!")
+
+    if not users.create_user(username, password, role):
+        return render_template("register.html", message="Rekisteröinti ei onnistunut! Ole hyvä ja yritä uudelleen.")
+    
+    session["username"] = username
+    return redirect("/")
 
 @app.route("/login", methods=["GET"])
 def login_get():
