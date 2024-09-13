@@ -1,0 +1,15 @@
+{% extends "layout.html" %} {% block content %}
+<form action="/login" method="POST">
+  <ul>
+    <li>
+      <label>Tunnus:</label>
+      <input type="text" name="username" />
+    </li>
+    <li>
+      <label>Salasana:</label>
+      <input type="password" name="password" />
+    </li>
+    <button type="submit">Kirjaudu</button>
+  </ul>
+</form>
+{% endblock %}
