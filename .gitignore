@@ -4,3 +4,6 @@ venv
 
 # Dummy data for testing
 populate_db.sql
+
+# Server start script for development
+start_server.sh
