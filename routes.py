@@ -22,9 +22,10 @@ def login_get():
 def login_post():
     username = request.form["username"]
     password = request.form["password"]
-    if users.check_credentials(username, password):
-        session["username"] = username
+    if not users.check_credentials(username, password):
+        return render_template("login.html", message="Väärä käyttäjätunnus tai salasana!")
 
+    session["username"] = username
     return redirect("/")
 
 @app.route("/logout")

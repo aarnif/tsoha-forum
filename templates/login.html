@@ -1,4 +1,5 @@
 {% extends "layout.html" %} {% block content %}
+<h2>Kirjaudu sisään:</h2>
 <form action="/login" method="POST">
   <ul>
     <li>
@@ -9,7 +10,11 @@
       <label>Salasana:</label>
       <input type="password" name="password" />
     </li>
-    <button type="submit">Kirjaudu</button>
+    <li>
+      <button type="submit">Kirjaudu</button>
+    </li>
   </ul>
 </form>
+<p>{{ message }}</p>
+<button><a href="/register">Luo tunnus</a></button>
 {% endblock %}
