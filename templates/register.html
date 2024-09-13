@@ -1,0 +1,31 @@
+{% extends "layout.html" %} {% block content %}
+<form action="/register" method="POST">
+  <h2>Luo uusi käyttäjä:</h2>
+  <ul>
+    <li>
+      <label>Rooli:</label>
+      <select name="role">
+        <option value="0">Käyttäjä</option>
+        <option value="1">Ylläpitäjä</option>
+      </select>
+    </li>
+    <li>
+      <label>Tunnus:</label>
+      <input type="text" name="username" />
+    </li>
+    <li>
+      <label>Salasana:</label>
+      <input type="password" name="password" />
+    </li>
+    <li>
+      <label>Vahvista Salasana:</label>
+      <input type="password" name="confirm-password" />
+    </li>
+    <li>
+      <button type="submit">Luo Tunnus</button>
+    </li>
+  </ul>
+</form>
+<p>{{ message }}</p>
+<button><a href="/login">Takaisin</a></button>
+{% endblock %}
