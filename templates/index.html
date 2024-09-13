@@ -1,0 +1,4 @@
+{% extends "layout.html" %} {% block content %}
+<p>Olet kirjautunut nimellä <strong>{{ session.username }}</strong></p>
+<button><a href="/logout">Kirjaudu ulos</a></button>
+{% endblock %}
