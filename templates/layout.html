@@ -7,7 +7,13 @@
     <title>Keskustelusovellus</title>
   </head>
   <body>
-    <h1>Keskustelusovellus</h1>
+    <header>
+      <h1>Keskustelusovellus</h1>
+      {% if session.username %}
+      <p>Olet kirjautunut nimellä <strong>{{ session.username }}</strong></p>
+      <button><a href="/logout">Kirjaudu ulos</a></button>
+      {% endif %}
+    </header>
     {% block content %}{% endblock %}
   </body>
 </html>
