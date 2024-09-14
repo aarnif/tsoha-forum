@@ -62,15 +62,18 @@ def logout():
     return redirect("/login")
 
 # Sub forum routes
-@app.route("/sub_forums/<int:sub_forum_id>")
-def sub_forum(sub_forum_id):
-    return f"The sub-forum {sub_forum_id}, NOT IMPLEMENTED YET!"
+@app.route("/subforums/<int:subforum_id>")
+def sub_forum(subforum_id):
+    print("Subforum ID:", subforum_id)
+    subforum = subforums.get_subforum(subforum_id)
+    print("Subforum:", subforum)
+    return render_template("subforum.html", subforum=subforum)
 
 # Thread routes
-@app.route("/sub_forums/<int:sub_forum_id>/threads")
+@app.route("/subforums/<int:sub_forum_id>/threads")
 def threads(sub_forum_id):
     return f"The sub-forum {sub_forum_id} threads, NOT IMPLEMENTED YET!"
 
-@app.route("/sub_forums/<int:sub_forum_id>/threads/<int:thread_id>")
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>")
 def thread(sub_forum_id, thread_id):
     return f"The individual thread {thread_id} in sub-forum {sub_forum_id}, NOT IMPLEMENTED YET!"
