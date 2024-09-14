@@ -1,0 +1,17 @@
+{% extends "layout.html" %} {% block content %}
+<p>Olet kirjautunut nimellä <strong>{{ session.username }}</strong></p>
+<button><a href="/logout">Kirjaudu ulos</a></button>
+
+<h2>{{ subforum.name }}</h2>
+
+<ul>
+  {% for thread in subforum %}
+  <li>
+    <h2>{{ thread.title }}</h2>
+    <p>Viestit: {{ thread.messages }}</p>
+    <p>Viimeisin viesti: {{ thread.lastest_message }}</p>
+  </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
