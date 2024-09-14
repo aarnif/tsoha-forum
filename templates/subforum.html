@@ -5,7 +5,11 @@
 <ul>
   {% for thread in subforum %}
   <li>
-    <h2>{{ thread.title }}</h2>
+    <h2>
+      <a href="/subforums/{{thread.sf_id}}/threads/{{thread.t_id}}"
+        >{{ thread.title }}</a
+      >
+    </h2>
     <p>Viestit: {{ thread.messages }}</p>
     <p>Viimeisin viesti: {{ thread.lastest_message }}</p>
   </li>
