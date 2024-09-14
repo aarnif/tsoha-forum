@@ -1,11 +1,14 @@
 from app import app
 from flask import render_template, request, session, redirect
 import users
+import subforums
 
 @app.route("/")
 def index():
     if session.get("username"):
-        return render_template("index.html")
+        all_subforums = subforums.get_all_subforums()
+        print("Subforums:", all_subforums)
+        return render_template("index.html", all_subforums=all_subforums)
     
     return redirect("/login")
 
@@ -59,10 +62,6 @@ def logout():
     return redirect("/login")
 
 # Sub forum routes
-@app.route("/sub_forums")
-def sub_forums():
-    return "The sub-forums page, NOT IMPLEMENTED YET!"
-
 @app.route("/sub_forums/<int:sub_forum_id>")
 def sub_forum(sub_forum_id):
     return f"The sub-forum {sub_forum_id}, NOT IMPLEMENTED YET!"
