@@ -76,4 +76,5 @@ def threads(sub_forum_id):
 
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>")
 def thread(sub_forum_id, thread_id):
-    return f"The individual thread {thread_id} in sub-forum {sub_forum_id}, NOT IMPLEMENTED YET!"
+    thread = subforums.get_thread(thread_id)
+    return render_template("thread.html", thread=thread)
