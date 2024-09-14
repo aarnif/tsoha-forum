@@ -1,0 +1,15 @@
+{% extends "layout.html" %} {% block content %}
+
+<h2>{{ thread[0].title }}</h2>
+
+<ul>
+  {% for message in thread %}
+  <li>
+    <p>{{ message.username }}</p>
+    <p>{{ message.content }}</p>
+    <p>{{ message.created_at }}</p>
+  </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
