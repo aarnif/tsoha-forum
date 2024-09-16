@@ -50,15 +50,20 @@ def login_get():
 def login_post():
     username = request.form["username"]
     password = request.form["password"]
-    if not users.check_credentials(username, password):
+    user = users.check_credentials(username, password)
+    if not user:
         return render_template("login.html", message="Väärä käyttäjätunnus tai salasana!")
 
-    session["username"] = username
+    session["username"] = user.username
+    session["user_id"] = user.id
+    session["role"] = user.role
     return redirect("/")
 
 @app.route("/logout")
 def logout():
     del session["username"]
+    del session["user_id"]
+    del session["role"]
     return redirect("/login")
 
 # Sub forum routes
@@ -70,11 +75,16 @@ def sub_forum(subforum_id):
     return render_template("subforum.html", subforum=subforum)
 
 # Thread routes
-@app.route("/subforums/<int:sub_forum_id>/threads")
-def threads(sub_forum_id):
-    return f"The sub-forum {sub_forum_id} threads, NOT IMPLEMENTED YET!"
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>", methods=["GET"])
+def thread_get(sub_forum_id, thread_id):
+    thread = subforums.get_thread(thread_id)
+    return render_template("thread.html", thread=thread)
 
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>")
-def thread(sub_forum_id, thread_id):
+
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>", methods=["POST"])
+def thread_post(sub_forum_id, thread_id):
+    message_content = request.form["message-content"]
+    print("Message content:", message_content)
+    subforums.add_message_to_thread(thread_id, session["user_id"], message_content)
     thread = subforums.get_thread(thread_id)
     return render_template("thread.html", thread=thread)

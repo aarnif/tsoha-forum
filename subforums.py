@@ -29,6 +29,13 @@ def get_thread(thread_id):
                                     FROM \
                                         threads t LEFT JOIN messages m ON m.thread_id = t.id \
                                     LEFT JOIN users u ON m.creator_id = u.id \
-                                    WHERE t.id = :thread_id"), {"thread_id": thread_id})
+                                    WHERE t.id = :thread_id ORDER BY created_at"), {"thread_id": thread_id})
     thread = result.fetchall()
     return thread
+
+def add_message_to_thread(thread_id, user_id, message_content):
+    db.session.execute(text("INSERT INTO messages (thread_id, creator_id, content) \
+                            VALUES (:thread_id, :creator_id, :content)"), \
+                            {"thread_id": thread_id, "creator_id": user_id, "content": message_content})
+    db.session.commit()
+    return True

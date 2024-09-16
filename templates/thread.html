@@ -12,4 +12,16 @@
   {% endfor %}
 </ul>
 
+<form action="{{request.url}}" method="POST">
+  <ul>
+    <li>
+      <label>Viesti:</label>
+      <textarea name="message-content" rows="8" cols="40"> </textarea>
+    </li>
+    <li>
+      <button type="submit">Lähetä</button>
+    </li>
+  </ul>
+</form>
+
 {% endblock %}
