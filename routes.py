@@ -83,3 +83,16 @@ def thread_post(sub_forum_id, thread_id):
     subforums.add_message_to_thread(thread_id, session["user_id"], message_content)
     thread = subforums.get_thread(thread_id)
     return render_template("thread.html", thread=thread)
+
+# Message routes
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>", methods=["GET"])
+def update_message_get(sub_forum_id, thread_id, message_id):
+    message = subforums.get_message(message_id)
+    return_url = f"/subforums/{sub_forum_id}/threads/{thread_id}"
+    return render_template("update_message.html", message=message, return_url=return_url)
+
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>", methods=["POST"])
+def update_message_post(sub_forum_id, thread_id, message_id):
+    message_content = request.form["message-content"]
+    subforums.update_message(message_id, message_content)
+    return redirect(f"/subforums/{sub_forum_id}/threads/{thread_id}")

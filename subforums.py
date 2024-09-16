@@ -25,7 +25,7 @@ def get_subforum(subforum_id):
 
 def get_thread(thread_id):
     result = db.session.execute(text("SELECT t.id as t_id, t.title AS title, m.id AS m_id, \
-                                     username, m.content AS content, m.created_at AS created_at \
+                                     username, m.content AS content, m.created_at AS created_at, m.updated_at AS updated_at \
                                     FROM \
                                         threads t LEFT JOIN messages m ON m.thread_id = t.id \
                                     LEFT JOIN users u ON m.creator_id = u.id \
@@ -37,5 +37,17 @@ def add_message_to_thread(thread_id, user_id, message_content):
     db.session.execute(text("INSERT INTO messages (thread_id, creator_id, content) \
                             VALUES (:thread_id, :creator_id, :content)"), \
                             {"thread_id": thread_id, "creator_id": user_id, "content": message_content})
+    db.session.commit()
+    return True
+
+def get_message(message_id):
+    result = db.session.execute(text("SELECT id, thread_id, creator_id, content, created_at, updated_at \
+                                     FROM messages WHERE id = :message_id"), {"message_id": message_id})
+    message = result.fetchone()
+    return message
+
+def update_message(message_id, message_content):
+    db.session.execute(text("UPDATE messages SET content = :content, updated_at = Now() \
+                            WHERE id = :message_id"), {"content": message_content, "message_id": message_id})
     db.session.commit()
     return True

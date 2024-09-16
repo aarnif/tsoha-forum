@@ -8,14 +8,24 @@
     <p>{{ message.username }}</p>
     <p>{{ message.content }}</p>
     <p>{{ message.created_at }}</p>
+    {% if message.created_at != message.updated_at %}
+    <p>Päivitetty: {{ message.updated_at }}</p>
+    {% endif %}
   </li>
-  {% endfor %}
+
+  {% if message.username == session.username %}
+  <button>
+    <a href="{{request.url}}/messages/{{message.m_id}}">Päivitä Viesti</a>
+  </button>
+  {% endif %} {% endfor %}
 </ul>
 
 <form action="{{request.url}}" method="POST">
   <ul>
     <li>
       <label>Viesti:</label>
+    </li>
+    <li>
       <textarea name="message-content" rows="8" cols="40"> </textarea>
     </li>
     <li>
