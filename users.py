@@ -1,17 +1,27 @@
 from db import db
 from sqlalchemy.sql import text
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask import session
 
-def check_credentials(username, password):
+def get_user(username):
     result = db.session.execute(text("SELECT id, username, password_hash, role FROM users WHERE username=:username"), {"username":username})
-    user = result.fetchone()    
-    if not user:
-        return False
+    user = result.fetchone()
+    return user
+
+def logout():
+    del session["user_id"]
+    del session["username"]
+    del session["role"]
+
+def login(username, password):
+    user = get_user(username)
+    if user and check_password_hash(user.password_hash, password):
+        session["user_id"] = user.id
+        session["username"] = user.username
+        session["role"] = user.role
+        return True
     else:
-        if check_password_hash(user.password_hash, password):
-            return user
-        else:
-            return False
+        return False
         
 def check_if_user_exists(username):
     result = db.session.execute(text("SELECT id FROM users WHERE username=:username"), {"username":username})

@@ -39,7 +39,8 @@ def register_post():
     if not users.create_user(username, password, role):
         return render_template("register.html", message="Rekisteröinti ei onnistunut! Ole hyvä ja yritä uudelleen.")
     
-    session["username"] = username
+    users.login(username, password)
+
     return redirect("/")
 
 @app.route("/login", methods=["GET"])
@@ -50,20 +51,14 @@ def login_get():
 def login_post():
     username = request.form["username"]
     password = request.form["password"]
-    user = users.check_credentials(username, password)
-    if not user:
+    if not users.login(username, password):
         return render_template("login.html", message="Väärä käyttäjätunnus tai salasana!")
 
-    session["username"] = user.username
-    session["user_id"] = user.id
-    session["role"] = user.role
     return redirect("/")
 
 @app.route("/logout")
 def logout():
-    del session["username"]
-    del session["user_id"]
-    del session["role"]
+    users.logout()
     return redirect("/login")
 
 # Sub forum routes
