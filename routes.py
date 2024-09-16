@@ -61,6 +61,7 @@ def logout():
     users.logout()
     return redirect("/login")
 
+
 # Sub forum routes
 @app.route("/subforums/<int:subforum_id>")
 def sub_forum(subforum_id):
@@ -69,12 +70,12 @@ def sub_forum(subforum_id):
     print("Subforum:", subforum)
     return render_template("subforum.html", subforum=subforum)
 
+
 # Thread routes
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>", methods=["GET"])
 def thread_get(sub_forum_id, thread_id):
     thread = subforums.get_thread(thread_id)
     return render_template("thread.html", thread=thread)
-
 
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>", methods=["POST"])
 def thread_post(sub_forum_id, thread_id):
@@ -83,6 +84,29 @@ def thread_post(sub_forum_id, thread_id):
     subforums.add_message_to_thread(thread_id, session["user_id"], message_content)
     thread = subforums.get_thread(thread_id)
     return render_template("thread.html", thread=thread)
+
+@app.route("/subforums/<int:sub_forum_id>/threads/new", methods=["GET"])
+def new_thread_get(sub_forum_id):
+    return_url = f"/subforums/{sub_forum_id}"   
+    return render_template("new_thread.html", return_url=return_url)
+
+@app.route("/subforums/<int:sub_forum_id>/threads/new", methods=["POST"])
+def new_thread_post(sub_forum_id):
+    print("Creating new thread")
+    title = request.form["title"]
+    message_content = request.form["message-content"]
+
+    if len(title) < 4 or len(title) > 20:
+        return render_template("new_thread.html", message="Otsikon tulee olla 6-20 merkkiä pitkä!")
+    
+    if len(message_content) < 1:
+        return render_template("new_thread.html", message="Viesti ei voi olla tyhjä!")
+    
+    if not subforums.create_thread(sub_forum_id, session["user_id"], title, message_content):
+        return render_template("new_thread.html", message="Virhe luotaessa uutta ketjua! Ole hyvä ja yritä uudelleen.")
+    
+    return redirect(f"/subforums/{sub_forum_id}")
+
 
 # Message routes
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/update", methods=["GET"])

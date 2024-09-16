@@ -33,6 +33,21 @@ def get_thread(thread_id):
     thread = result.fetchall()
     return thread
 
+def create_thread(subforum_id, user_id, title, message_content):
+    try:
+        db.session.execute(text("INSERT INTO threads (subforum_id, creator_id, title) \
+                                VALUES (:subforum_id, :creator_id, :title)"), \
+                                {"subforum_id": subforum_id, "creator_id": user_id, "title": title})
+        db.session.commit()
+        thread_id = db.session.execute(text("SELECT id FROM threads WHERE subforum_id = :subforum_id AND creator_id = :creator_id AND title = :title"), \
+                                        {"subforum_id": subforum_id, "creator_id": user_id, "title": title}).fetchone()[0]
+        add_message_to_thread(thread_id, user_id, message_content)
+        return True
+    except:
+        print("Error creating thread")
+        return False
+   
+
 def add_message_to_thread(thread_id, user_id, message_content):
     db.session.execute(text("INSERT INTO messages (thread_id, creator_id, content) \
                             VALUES (:thread_id, :creator_id, :content)"), \
