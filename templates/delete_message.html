@@ -1,0 +1,22 @@
+{% extends "layout.html" %} {% block content %}
+
+<h2>Haluatko varmasti poistaa viestin?</h2>
+
+<form action="{{request.url}}" method="POST">
+  <ul>
+    <li>
+      <p>Sisältö:</p>
+    </li>
+    <li>
+      <p>{{ message.content }}</p>
+    </li>
+    <li>
+      <button type="button"><a href="{{return_url}}">En</a></button>
+    </li>
+    <li>
+      <button type="submit">Kyllä</button>
+    </li>
+  </ul>
+</form>
+
+{% endblock %}
