@@ -14,9 +14,21 @@
   </li>
 
   {% if message.username == session.username %}
-  <button>
-    <a href="{{request.url}}/messages/{{message.m_id}}">Päivitä Viesti</a>
-  </button>
+  <li>
+    <button>
+      <a href="{{request.url}}/messages/{{message.m_id}}/update"
+        >Muokkaa Viestiä</a
+      >
+    </button>
+  </li>
+
+  <li>
+    <button>
+      <a href="{{request.url}}/messages/{{message.m_id}}/delete"
+        >Poista viesti</a
+      >
+    </button>
+  </li>
   {% endif %} {% endfor %}
 </ul>
 

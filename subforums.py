@@ -51,3 +51,8 @@ def update_message(message_id, message_content):
                             WHERE id = :message_id"), {"content": message_content, "message_id": message_id})
     db.session.commit()
     return True
+
+def delete_message(message_id):
+    db.session.execute(text("DELETE FROM messages WHERE id = :message_id"), {"message_id": message_id})
+    db.session.commit()
+    return True
