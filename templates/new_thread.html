@@ -1,0 +1,34 @@
+{% extends "layout.html" %} {% block content %}
+
+<form action="{{request.url}}" method="POST">
+  <ul>
+    <li>
+      <label>Otsikko:</label>
+    </li>
+    <li>
+      <input type="text" name="title" />
+    </li>
+
+    <li>
+      <label>Ensimmäinen viesti</label>
+    </li>
+
+    <li>
+      <textarea name="message-content" rows="8" cols="40"></textarea>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <button type="button"><a href="{{return_url}}">Takaisin</a></button>
+    </li>
+    <li>
+      <button type="submit">Luo Ketju</button>
+    </li>
+    <li>
+      <p>{{ message }}</p>
+    </li>
+  </ul>
+</form>
+
+{% endblock %}
