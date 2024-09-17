@@ -1,0 +1,22 @@
+{% extends "layout.html" %} {% block content %}
+
+<h2>Haluatko varmasti poistaa ketjun?</h2>
+
+<form action="{{request.url}}" method="POST">
+  <ul>
+    <li>
+      <p>Ketju:</p>
+    </li>
+    <li>
+      <p>{{ thread[0].title }}</p>
+    </li>
+    <li>
+      <button type="button"><a href="{{return_url}}">En</a></button>
+    </li>
+    <li>
+      <button type="submit">Kyllä</button>
+    </li>
+  </ul>
+</form>
+
+{% endblock %}
