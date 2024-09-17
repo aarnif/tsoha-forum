@@ -55,14 +55,27 @@ def update_thread(thread_id, title):
     except:
         print("Error updating thread")
         return False
+    
+def delete_thread(thread_id):
+    try:
+        db.session.execute(text("DELETE FROM threads WHERE id = :thread_id"), {"thread_id": thread_id})
+        db.session.commit()
+        return True
+    except:
+        print("Error deleting thread")
+        return False
    
 
 def add_message_to_thread(thread_id, user_id, message_content):
-    db.session.execute(text("INSERT INTO messages (thread_id, creator_id, content) \
-                            VALUES (:thread_id, :creator_id, :content)"), \
-                            {"thread_id": thread_id, "creator_id": user_id, "content": message_content})
-    db.session.commit()
-    return True
+    try:
+        db.session.execute(text("INSERT INTO messages (thread_id, creator_id, content) \
+                                VALUES (:thread_id, :creator_id, :content)"), \
+                                {"thread_id": thread_id, "creator_id": user_id, "content": message_content})
+        db.session.commit()
+        return True
+    except:
+        print("Error adding message")
+        return False
 
 def get_message(message_id):
     result = db.session.execute(text("SELECT id, thread_id, creator_id, content, created_at, updated_at \
@@ -71,12 +84,21 @@ def get_message(message_id):
     return message
 
 def update_message(message_id, message_content):
-    db.session.execute(text("UPDATE messages SET content = :content, updated_at = Now() \
-                            WHERE id = :message_id"), {"content": message_content, "message_id": message_id})
-    db.session.commit()
-    return True
+    try:
+        db.session.execute(text("UPDATE messages SET content = :content, updated_at = Now() \
+                                WHERE id = :message_id"), {"content": message_content, "message_id": message_id})
+        db.session.commit()
+        return True
+    except:
+        print("Error updating message")
+        return False
+
 
 def delete_message(message_id):
-    db.session.execute(text("DELETE FROM messages WHERE id = :message_id"), {"message_id": message_id})
-    db.session.commit()
-    return True
+    try:
+        db.session.execute(text("DELETE FROM messages WHERE id = :message_id"), {"message_id": message_id})
+        db.session.commit()
+        return True
+    except:
+        print("Error deleting message")
+        return False

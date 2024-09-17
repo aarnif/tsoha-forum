@@ -127,6 +127,17 @@ def update_thread_post(sub_forum_id, thread_id):
     
     return redirect(f"/subforums/{sub_forum_id}")
 
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/delete", methods=["GET"])
+def delete_thread_get(sub_forum_id, thread_id):
+    thread = subforums.get_thread(thread_id)
+    return_url = f"/subforums/{sub_forum_id}"   
+    return render_template("delete_thread.html", thread=thread, return_url=return_url)
+
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/delete", methods=["POST"])
+def delete_thread_post(sub_forum_id, thread_id):
+    subforums.delete_thread(thread_id)
+    return redirect(f"/subforums/{sub_forum_id}")
+
 
 # Message routes
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/update", methods=["GET"])
