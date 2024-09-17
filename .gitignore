@@ -7,3 +7,6 @@ populate_db.sql
 
 # Server start script for development
 start_server.sh
+
+# Empty database for development
+empty_database.sql
