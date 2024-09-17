@@ -13,7 +13,15 @@
     <p>Viestit: {{ thread.messages }}</p>
     <p>Viimeisin viesti: {{ thread.lastest_message }}</p>
   </li>
-  {% endfor %}
+  {% if thread.t_creator_id == session.user_id %}
+  <li>
+    <button>
+      <a href="/subforums/{{thread.sf_id}}/threads/{{thread.t_id}}/update"
+        >Muokkaa ketjua</a
+      >
+    </button>
+  </li>
+  {% endif %} {% endfor %}
 </ul>
 
 <ul>

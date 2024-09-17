@@ -13,7 +13,7 @@ def get_all_subforums():
     return subforums
 
 def get_subforum(subforum_id):
-    result = db.session.execute(text("SELECT sf.id as sf_id, t.id AS t_id, t.title AS title, COUNT(m.id) AS messages, \
+    result = db.session.execute(text("SELECT sf.id as sf_id, t.creator_id as t_creator_id, t.id AS t_id, t.title AS title, COUNT(m.id) AS messages, \
                                     MAX(m.created_at) AS lastest_message \
                                     FROM \
                                         subforums sf LEFT JOIN threads t ON sf.id = t.subforum_id \
@@ -45,6 +45,15 @@ def create_thread(subforum_id, user_id, title, message_content):
         return True
     except:
         print("Error creating thread")
+        return False
+    
+def update_thread(thread_id, title):
+    try:
+        db.session.execute(text("UPDATE threads SET title = :title, updated_at = Now() WHERE id = :thread_id"), {"title": title, "thread_id": thread_id})
+        db.session.commit()
+        return True
+    except:
+        print("Error updating thread")
         return False
    
 

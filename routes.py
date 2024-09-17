@@ -96,14 +96,34 @@ def new_thread_post(sub_forum_id):
     title = request.form["title"]
     message_content = request.form["message-content"]
 
-    if len(title) < 4 or len(title) > 20:
-        return render_template("new_thread.html", message="Otsikon tulee olla 6-20 merkkiä pitkä!")
+    if len(title) < 6 or len(title) > 30:
+        return render_template("new_thread.html", message="Otsikon tulee olla 6-30 merkkiä pitkä!")
     
     if len(message_content) < 1:
         return render_template("new_thread.html", message="Viesti ei voi olla tyhjä!")
     
     if not subforums.create_thread(sub_forum_id, session["user_id"], title, message_content):
         return render_template("new_thread.html", message="Virhe luotaessa uutta ketjua! Ole hyvä ja yritä uudelleen.")
+    
+    return redirect(f"/subforums/{sub_forum_id}")
+
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/update", methods=["GET"])
+def update_thread_get(sub_forum_id, thread_id):
+    thread = subforums.get_thread(thread_id)
+    return_url = f"/subforums/{sub_forum_id}"   
+    return render_template("update_thread.html", thread=thread, return_url=return_url, message="")
+
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/update", methods=["POST"])
+def update_thread_post(sub_forum_id, thread_id):
+    thread = subforums.get_thread(thread_id)
+    title = request.form["title"]
+    return_url = f"/subforums/{sub_forum_id}"  
+
+    if len(title) < 6 or len(title) > 30:
+        return render_template("update_thread.html", thread=thread, return_url=return_url, message="Otsikon tulee olla 6-30 merkkiä pitkä!")
+    
+    if not subforums.update_thread(thread_id, title):
+        return render_template("update_thread.html", thread=thread, return_url=return_url, message="Virhe päivittäessa ketjua! Ole hyvä ja yritä uudelleen.")
     
     return redirect(f"/subforums/{sub_forum_id}")
 
