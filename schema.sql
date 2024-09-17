@@ -33,7 +33,7 @@ CREATE TABLE threads (
 
 CREATE TABLE messages (
     id SERIAL PRIMARY KEY,
-    thread_id INTEGER REFERENCES threads,
+    thread_id INTEGER REFERENCES threads ON DELETE CASCADE,
     creator_id INTEGER REFERENCES users,
     content TEXT,
     created_at TIMESTAMP DEFAULT NOW(),
