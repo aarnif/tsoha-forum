@@ -1,0 +1,29 @@
+{% extends "layout.html" %} {% block content %}
+
+<h2>Hakutulokset:</h2>
+
+{% if messages|length == 0 %}
+<p>Ei hakutuloksia.</p>
+{% else %}
+
+<ul>
+  {% for message in messages %}
+  <li class="search-result">
+    <p>{{ message.content }}</p>
+    <p>{{ message.created_at }}</p>
+    <p>{{ message.sender }}</p>
+    <p>
+      <a href="/subforums/{{message.subforum_id}}/threads/{{message.thread_id}}"
+        >{{ message.thread_title }}</a
+      >
+    </p>
+    <p>
+      <a href="/subforums/{{message.subforum_id}}"
+        >{{ message.subforum_name }}</a
+      >
+    </p>
+  </li>
+  {% endfor %}
+</ul>
+
+{% endif %} {% endblock %}
