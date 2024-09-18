@@ -12,6 +12,13 @@
       {% if session.username %}
       <p>Olet kirjautunut nimellä <strong>{{ session.username }}</strong></p>
       <button><a href="/logout">Kirjaudu ulos</a></button>
+      <form action="/result" method="GET">
+        <ul>
+          <li><label>Hae viestejä:</label></li>
+          <li><input type="text" name="search-word" /></li>
+          <li><button type="submit">Hae</button></li>
+        </ul>
+      </form>
       {% endif %}
     </header>
     {% block content %}{% endblock %}

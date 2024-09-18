@@ -162,3 +162,10 @@ def delete_message_get(sub_forum_id, thread_id, message_id):
 def delete_message_post(sub_forum_id, thread_id, message_id):
     subforums.delete_message(message_id)
     return redirect(f"/subforums/{sub_forum_id}/threads/{thread_id}")
+
+# Search messages route
+@app.route("/result")
+def result():
+    search_word = request.args["search-word"]
+    messages = subforums.search_messages(search_word)
+    return render_template("result.html", messages=messages)

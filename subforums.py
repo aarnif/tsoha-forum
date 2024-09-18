@@ -102,3 +102,13 @@ def delete_message(message_id):
     except:
         print("Error deleting message")
         return False
+    
+def search_messages(query):
+    result = db.session.execute(text("SELECT m.id, s.id as subforum_id, thread_id, s.name as subforum_name, t.title as thread_title, \
+                                    u.username as sender, m.created_at, content  \
+                                    FROM messages m  LEFT JOIN threads t ON m.thread_id = t.id \
+                                    LEFT JOIN subforums s ON t.subforum_id = s.id \
+                                    LEFT JOIN users u ON m.creator_id = u.id \
+                                    WHERE s.is_secret = FALSE and content LIKE :query"), {"query":"%"+query+"%"})
+    messages = result.fetchall()
+    return messages
