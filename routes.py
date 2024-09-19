@@ -70,6 +70,16 @@ def sub_forum(subforum_id):
     print("Subforum:", subforum)
     return render_template("subforum.html", subforum=subforum)
 
+@app.route("/subforums/<int:subforum_id>/delete", methods=["GET"])
+def delete_subforum_get(subforum_id):
+    subforum = subforums.get_subforum(subforum_id)
+    return render_template("delete_subforum.html", subforum=subforum)
+
+@app.route("/subforums/<int:subforum_id>/delete", methods=["POST"])
+def delete_subforum_post(subforum_id):
+    subforums.delete_subforum(subforum_id)
+    return redirect("/")
+
 
 # Thread routes
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>", methods=["GET"])

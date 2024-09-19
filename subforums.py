@@ -13,7 +13,7 @@ def get_all_subforums():
     return subforums
 
 def get_subforum(subforum_id):
-    result = db.session.execute(text("SELECT sf.id as sf_id, t.creator_id as t_creator_id, t.id AS t_id, t.title AS title, COUNT(m.id) AS messages, \
+    result = db.session.execute(text("SELECT sf.id as sf_id, sf.name AS name, t.creator_id as t_creator_id, t.id AS t_id, t.title AS title, COUNT(m.id) AS messages, \
                                     MAX(m.created_at) AS lastest_message \
                                     FROM \
                                         subforums sf LEFT JOIN threads t ON sf.id = t.subforum_id \
@@ -22,6 +22,15 @@ def get_subforum(subforum_id):
                                     GROUP BY sf.id, t.id, t.title"), {"subforum_id": subforum_id})
     subforum = result.fetchall()
     return subforum
+
+def delete_subforum(subforum_id):
+    try:
+        db.session.execute(text("DELETE FROM subforums WHERE id = :subforum_id"), {"subforum_id": subforum_id})
+        db.session.commit()
+        return True
+    except:
+        print("Error deleting subforum")
+        return False
 
 def get_thread(thread_id):
     result = db.session.execute(text("SELECT t.id as t_id, t.title AS title, m.id AS m_id, \

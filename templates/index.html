@@ -9,7 +9,11 @@
     <p>Viestit: {{ sub_forum.messages }}</p>
     <p>Viimeisin viesti: {{ sub_forum.lastest_message }}</p>
   </li>
-  {% endfor %}
+  {% if session.role == 1 %}
+  <button>
+    <a href="/subforums/{{sub_forum.id}}/delete">Poista alue</a>
+  </button>
+  {% endif %} {% endfor %}
 </ul>
 
 {% endblock %}
