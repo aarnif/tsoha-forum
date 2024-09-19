@@ -23,6 +23,16 @@ def get_subforum(subforum_id):
     subforum = result.fetchall()
     return subforum
 
+def create_subforum(name, description, is_secret):
+    try:
+        db.session.execute(text("INSERT INTO subforums (name, description, is_secret) VALUES (:name, :description, :is_secret)"), \
+                           {"name": name, "description": description, "is_secret": is_secret})
+        db.session.commit()
+        return True
+    except:
+        print("Error creating subforum")
+        return False
+
 def delete_subforum(subforum_id):
     try:
         db.session.execute(text("DELETE FROM subforums WHERE id = :subforum_id"), {"subforum_id": subforum_id})

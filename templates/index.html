@@ -15,5 +15,8 @@
   </button>
   {% endif %} {% endfor %}
 </ul>
-
-{% endblock %}
+{% if session.role == 1 %}
+<button>
+  <a href="/subforums/new">Uusi alue</a>
+</button>
+{% endif %} {% endblock %}

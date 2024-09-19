@@ -70,6 +70,23 @@ def sub_forum(subforum_id):
     print("Subforum:", subforum)
     return render_template("subforum.html", subforum=subforum)
 
+@app.route("/subforums/new", methods=["GET"])
+def new_subforum_get():
+    return render_template("new_subforum.html")
+
+@app.route("/subforums/new", methods=["POST"])
+def new_subforum_post():
+    name = request.form["name"]
+    description = request.form["description"]
+    is_secret = request.form["is-secret"]
+    if len(name) < 6 or len(name) > 30:
+        return render_template("new_subforum.html", message="Nimen tulee olla 6-30 merkkiä pitkä!")
+    
+    if not subforums.create_subforum(name, description, is_secret):
+        return render_template("new_subforum.html", message="Virhe luotaessa uutta aluealuetta! Ole hyvä ja yritä uudelleen.")
+    
+    return redirect("/")
+
 @app.route("/subforums/<int:subforum_id>/delete", methods=["GET"])
 def delete_subforum_get(subforum_id):
     subforum = subforums.get_subforum(subforum_id)
