@@ -23,7 +23,7 @@ CREATE TABLE subforum_access (
 
 CREATE TABLE threads (
     id SERIAL PRIMARY KEY,
-    subforum_id INTEGER REFERENCES subforums,
+    subforum_id INTEGER REFERENCES subforums ON DELETE CASCADE,
     creator_id INTEGER REFERENCES users,
     title TEXT,
     subtitle TEXT,
