@@ -1,5 +1,6 @@
 {% extends "layout.html" %} {% block content %}
 
+<h2>Alueet</h2>
 <ul>
   {% for sub_forum in all_subforums %}
   <li>
@@ -15,7 +16,27 @@
   </button>
   {% endif %} {% endfor %}
 </ul>
-{% if session.role == 1 %}
+
+<h2>Salaiset Alueet</h2>
+{% if secret_subforums|length == 0 or secret_subforums[0].name == None %}
+<p>Sinulla ei ole pääsyä salaisiin alueisiin.</p>
+{% else %}
+<ul>
+  {% for sub_forum in secret_subforums %}
+  <li>
+    <h2><a href="/subforums/{{sub_forum.id}}">{{ sub_forum.name }}</a></h2>
+    <p>{{ sub_forum.description }}</p>
+    <p>Ketjut: {{ sub_forum.threads }}</p>
+    <p>Viestit: {{ sub_forum.messages }}</p>
+    <p>Viimeisin viesti: {{ sub_forum.lastest_message }}</p>
+  </li>
+  {% if session.role == 1 %}
+  <button>
+    <a href="/subforums/{{sub_forum.id}}/delete">Poista alue</a>
+  </button>
+  {% endif %} {% endfor %}
+</ul>
+{% endif %} {% if session.role == 1 %}
 <button>
   <a href="/subforums/new">Uusi alue</a>
 </button>

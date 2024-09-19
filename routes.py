@@ -7,8 +7,12 @@ import subforums
 def index():
     if session.get("username"):
         all_subforums = subforums.get_all_subforums()
-        print("Subforums:", all_subforums)
-        return render_template("index.html", all_subforums=all_subforums)
+        secret_subforums = []
+        if session.get("role") == 1:
+            secret_subforums = subforums.get_all_secret_subforums()
+        else:
+            secret_subforums = subforums.get_all_secret_subforums_by_user(session["user_id"])
+        return render_template("index.html", all_subforums=all_subforums, secret_subforums=secret_subforums)
     
     return redirect("/login")
 
