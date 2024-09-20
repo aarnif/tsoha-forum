@@ -3,7 +3,7 @@ from sqlalchemy.sql import text
 
 def get_all_subforums():
     result = db.session.execute(text("SELECT sf.id as id, sf.name AS name, sf.description AS description, COUNT(DISTINCT t.id) AS threads, \
-                                COUNT(m.id) AS messages, MAX(m.created_at) AS lastest_message \
+                                COUNT(m.id) AS messages, MAX(m.created_at) AS latest_message \
                                 FROM subforums sf \
                                 LEFT JOIN threads t ON sf.id = t.subforum_id \
                                 LEFT JOIN messages m ON t.id = m.thread_id \
@@ -14,7 +14,7 @@ def get_all_subforums():
 
 def get_all_secret_subforums():
     result = db.session.execute(text("SELECT sf.id as id, sf.name AS name, sf.description AS description, COUNT(DISTINCT t.id) AS threads, \
-                                COUNT(m.id) AS messages, MAX(m.created_at) AS lastest_message \
+                                COUNT(m.id) AS messages, MAX(m.created_at) AS latest_message \
                                 FROM subforums sf \
                                 LEFT JOIN threads t ON sf.id = t.subforum_id \
                                 LEFT JOIN messages m ON t.id = m.thread_id \
@@ -25,7 +25,7 @@ def get_all_secret_subforums():
 
 def get_all_secret_subforums_by_user(user_id):
     result = db.session.execute(text("SELECT sf.id as id, sf.name AS name, sf.description AS description, COUNT(DISTINCT t.id) AS threads, \
-                                COUNT(m.id) AS messages, MAX(m.created_at) AS lastest_message \
+                                COUNT(m.id) AS messages, MAX(m.created_at) AS latest_message \
                                 FROM subforum_access sa \
                                 JOIN subforums sf ON sa.subforum_id = sf.id AND sa.user_id = :user_id \
                                 LEFT JOIN threads t ON sf.id = t.subforum_id \
@@ -36,7 +36,7 @@ def get_all_secret_subforums_by_user(user_id):
 
 def get_subforum(subforum_id):
     result = db.session.execute(text("SELECT sf.id as sf_id, sf.name AS name, t.creator_id as t_creator_id, t.id AS t_id, t.title AS title, COUNT(m.id) AS messages, \
-                                    MAX(m.created_at) AS lastest_message \
+                                    MAX(m.created_at) AS latest_message \
                                     FROM \
                                         subforums sf LEFT JOIN threads t ON sf.id = t.subforum_id \
                                         LEFT JOIN messages m ON t.id = m.thread_id \

@@ -11,7 +11,7 @@
       >
     </h2>
     <p>Viestit: {{ thread.messages }}</p>
-    <p>Viimeisin viesti: {{ thread.lastest_message }}</p>
+    <p>Viimeisin viesti: {{ thread.latest_message }}</p>
   </li>
   {% if thread.t_creator_id == session.user_id %}
   <li>

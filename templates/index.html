@@ -8,7 +8,11 @@
     <p>{{ sub_forum.description }}</p>
     <p>Ketjut: {{ sub_forum.threads }}</p>
     <p>Viestit: {{ sub_forum.messages }}</p>
-    <p>Viimeisin viesti: {{ sub_forum.lastest_message }}</p>
+    {% if sub_forum.latest_message != None %}
+    <p>Viimeisin viesti: {{ sub_forum.latest_message }}</p>
+    {% else %}
+    <p>Viimeisin viesti: Ei viestejä</p>
+    {% endif %}
   </li>
   {% if session.role == 1 %}
   <button>
@@ -28,7 +32,11 @@
     <p>{{ sub_forum.description }}</p>
     <p>Ketjut: {{ sub_forum.threads }}</p>
     <p>Viestit: {{ sub_forum.messages }}</p>
-    <p>Viimeisin viesti: {{ sub_forum.lastest_message }}</p>
+    {% if sub_forum.latest_message != None %}
+    <p>Viimeisin viesti: {{ sub_forum.latest_message }}</p>
+    {% else %}
+    <p>Viimeisin viesti: Ei viestejä</p>
+    {% endif %}
   </li>
   {% if session.role == 1 %}
   <button>
