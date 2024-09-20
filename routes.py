@@ -109,7 +109,7 @@ def delete_subforum_post(subforum_id):
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>", methods=["GET"])
 def thread_get(sub_forum_id, thread_id):
     thread = subforums.get_thread(thread_id)
-    return render_template("thread.html", thread=thread)
+    return render_template("thread.html", thread=thread, return_url= f"/subforums/{sub_forum_id}")
 
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>", methods=["POST"])
 def thread_post(sub_forum_id, thread_id):
@@ -121,8 +121,7 @@ def thread_post(sub_forum_id, thread_id):
 
 @app.route("/subforums/<int:sub_forum_id>/threads/new", methods=["GET"])
 def new_thread_get(sub_forum_id):
-    return_url = f"/subforums/{sub_forum_id}"   
-    return render_template("new_thread.html", return_url=return_url)
+    return render_template("new_thread.html", return_url=f"/subforums/{sub_forum_id}"   )
 
 @app.route("/subforums/<int:sub_forum_id>/threads/new", methods=["POST"])
 def new_thread_post(sub_forum_id):
@@ -144,15 +143,13 @@ def new_thread_post(sub_forum_id):
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/update", methods=["GET"])
 def update_thread_get(sub_forum_id, thread_id):
     thread = subforums.get_thread(thread_id)
-    return_url = f"/subforums/{sub_forum_id}"   
-    return render_template("update_thread.html", thread=thread, return_url=return_url, message="")
+    return render_template("update_thread.html", thread=thread, return_url=f"/subforums/{sub_forum_id}", message="")
 
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/update", methods=["POST"])
 def update_thread_post(sub_forum_id, thread_id):
     thread = subforums.get_thread(thread_id)
     title = request.form["title"]
-    return_url = f"/subforums/{sub_forum_id}"  
-
+    return_url = f"/subforums/{sub_forum_id}"
     if len(title) < 6 or len(title) > 30:
         return render_template("update_thread.html", thread=thread, return_url=return_url, message="Otsikon tulee olla 6-30 merkkiä pitkä!")
     
@@ -164,8 +161,7 @@ def update_thread_post(sub_forum_id, thread_id):
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/delete", methods=["GET"])
 def delete_thread_get(sub_forum_id, thread_id):
     thread = subforums.get_thread(thread_id)
-    return_url = f"/subforums/{sub_forum_id}"   
-    return render_template("delete_thread.html", thread=thread, return_url=return_url)
+    return render_template("delete_thread.html", thread=thread, return_url=f"/subforums/{sub_forum_id}" )
 
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/delete", methods=["POST"])
 def delete_thread_post(sub_forum_id, thread_id):
@@ -177,8 +173,7 @@ def delete_thread_post(sub_forum_id, thread_id):
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/update", methods=["GET"])
 def update_message_get(sub_forum_id, thread_id, message_id):
     message = subforums.get_message(message_id)
-    return_url = f"/subforums/{sub_forum_id}/threads/{thread_id}"
-    return render_template("update_message.html", message=message, return_url=return_url)
+    return render_template("update_message.html", message=message, return_url=f"/subforums/{sub_forum_id}/threads/{thread_id}")
 
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/update", methods=["POST"])
 def update_message_post(sub_forum_id, thread_id, message_id):
@@ -189,8 +184,7 @@ def update_message_post(sub_forum_id, thread_id, message_id):
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/delete", methods=["GET"])
 def delete_message_get(sub_forum_id, thread_id, message_id):
     message = subforums.get_message(message_id)
-    return_url = f"/subforums/{sub_forum_id}/threads/{thread_id}"
-    return render_template("delete_message.html", message=message, return_url=return_url)
+    return render_template("delete_message.html", message=message, return_url=f"/subforums/{sub_forum_id}/threads/{thread_id}")
 
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/delete", methods=["POST"])
 def delete_message_post(sub_forum_id, thread_id, message_id):
