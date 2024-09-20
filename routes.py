@@ -17,12 +17,12 @@ def index():
     return redirect("/login")
 
 # User routes
-@app.route("/register", methods=["GET"])
-def register_get():
-    return render_template("register.html")
+@app.route("/register", methods=["GET", "POST"])
+def register():
 
-@app.route("/register", methods=["POST"])
-def register_post():
+    if request.method == "GET":
+        return render_template("register.html")
+
     username = request.form["username"]
     if len(username) < 4 or len(username) > 20:
         return render_template("register.html", message="Tunnuksen tulee olla 4-20 merkkiä pitkä!")
@@ -47,12 +47,12 @@ def register_post():
 
     return redirect("/")
 
-@app.route("/login", methods=["GET"])
-def login_get():
-    return render_template("login.html")
 
-@app.route("/login", methods=["POST"])
-def login_post():
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        return render_template("login.html")
+    
     username = request.form["username"]
     password = request.form["password"]
     if not users.login(username, password):
@@ -69,63 +69,52 @@ def logout():
 # Sub forum routes
 @app.route("/subforums/<int:subforum_id>")
 def sub_forum(subforum_id):
-    print("Subforum ID:", subforum_id)
     subforum = subforums.get_subforum(subforum_id)
-    print("Subforum:", subforum)
     return render_template("subforum.html", subforum=subforum)
 
-@app.route("/subforums/new", methods=["GET"])
-def new_subforum_get():
-    basic_users = users.get_all_basic_users()
-    return render_template("new_subforum.html", basic_users=basic_users)
-
-@app.route("/subforums/new", methods=["POST"])
+@app.route("/subforums/new", methods=["GET", "POST"])
 def new_subforum_post():
+    if request.method == "GET":
+        basic_users = users.get_all_basic_users()
+        return render_template("new_subforum.html", basic_users=basic_users)
+    
     name = request.form["name"]
     description = request.form["description"]
     is_secret = request.form["is-secret"]
-    users = request.form.getlist("users")
+    users_with_access = request.form.getlist("users")
 
     if len(name) < 6 or len(name) > 30:
         return render_template("new_subforum.html", message="Nimen tulee olla 6-30 merkkiä pitkä!")
     
-    if not subforums.create_subforum(name, description, is_secret, users):
+    if not subforums.create_subforum(name, description, is_secret, users_with_access):
         return render_template("new_subforum.html", message="Virhe luotaessa uutta aluealuetta! Ole hyvä ja yritä uudelleen.")
     
     return redirect("/")
 
-@app.route("/subforums/<int:subforum_id>/delete", methods=["GET"])
-def delete_subforum_get(subforum_id):
-    subforum = subforums.get_subforum(subforum_id)
-    return render_template("delete_subforum.html", subforum=subforum)
-
-@app.route("/subforums/<int:subforum_id>/delete", methods=["POST"])
-def delete_subforum_post(subforum_id):
+@app.route("/subforums/<int:subforum_id>/delete", methods=["GET", "POST"])
+def delete_subforum(subforum_id):
+    if request.method == "GET":
+        subforum = subforums.get_subforum(subforum_id)
+        return render_template("delete_subforum.html", subforum=subforum)
+    
     subforums.delete_subforum(subforum_id)
     return redirect("/")
 
 
 # Thread routes
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>", methods=["GET"])
-def thread_get(sub_forum_id, thread_id):
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>", methods=["GET", "POST"])
+def thread(sub_forum_id, thread_id):
+    if request.method == "POST":
+        message_content = request.form["message-content"]
+        subforums.add_message_to_thread(thread_id, session["user_id"], message_content)
     thread = subforums.get_thread(thread_id)
     return render_template("thread.html", thread=thread, return_url= f"/subforums/{sub_forum_id}")
 
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>", methods=["POST"])
-def thread_post(sub_forum_id, thread_id):
-    message_content = request.form["message-content"]
-    print("Message content:", message_content)
-    subforums.add_message_to_thread(thread_id, session["user_id"], message_content)
-    thread = subforums.get_thread(thread_id)
-    return render_template("thread.html", thread=thread)
-
-@app.route("/subforums/<int:sub_forum_id>/threads/new", methods=["GET"])
-def new_thread_get(sub_forum_id):
-    return render_template("new_thread.html", return_url=f"/subforums/{sub_forum_id}"   )
-
-@app.route("/subforums/<int:sub_forum_id>/threads/new", methods=["POST"])
-def new_thread_post(sub_forum_id):
-    print("Creating new thread")
+@app.route("/subforums/<int:sub_forum_id>/threads/new", methods=["GET", "POST"])
+def new_thread(sub_forum_id):
+    if request.method == "GET":
+        return render_template("new_thread.html", return_url=f"/subforums/{sub_forum_id}")
+    
     title = request.form["title"]
     message_content = request.form["message-content"]
 
@@ -140,16 +129,16 @@ def new_thread_post(sub_forum_id):
     
     return redirect(f"/subforums/{sub_forum_id}")
 
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/update", methods=["GET"])
-def update_thread_get(sub_forum_id, thread_id):
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/update", methods=["GET", "POST"])
+def update_thread(sub_forum_id, thread_id):
+    return_url=f"/subforums/{sub_forum_id}"
     thread = subforums.get_thread(thread_id)
-    return render_template("update_thread.html", thread=thread, return_url=f"/subforums/{sub_forum_id}", message="")
 
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/update", methods=["POST"])
-def update_thread_post(sub_forum_id, thread_id):
-    thread = subforums.get_thread(thread_id)
+    if request.method == "GET":
+        return render_template("update_thread.html", thread=thread, return_url=return_url, message="")
+
     title = request.form["title"]
-    return_url = f"/subforums/{sub_forum_id}"
+
     if len(title) < 6 or len(title) > 30:
         return render_template("update_thread.html", thread=thread, return_url=return_url, message="Otsikon tulee olla 6-30 merkkiä pitkä!")
     
@@ -158,36 +147,33 @@ def update_thread_post(sub_forum_id, thread_id):
     
     return redirect(f"/subforums/{sub_forum_id}")
 
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/delete", methods=["GET"])
-def delete_thread_get(sub_forum_id, thread_id):
-    thread = subforums.get_thread(thread_id)
-    return render_template("delete_thread.html", thread=thread, return_url=f"/subforums/{sub_forum_id}" )
-
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/delete", methods=["POST"])
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/delete", methods=["GET", "POST"])
 def delete_thread_post(sub_forum_id, thread_id):
+    if request.method == "GET":
+        thread = subforums.get_thread(thread_id)
+        return render_template("delete_thread.html", thread=thread, return_url=f"/subforums/{sub_forum_id}")
+    
     subforums.delete_thread(thread_id)
     return redirect(f"/subforums/{sub_forum_id}")
 
 
 # Message routes
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/update", methods=["GET"])
-def update_message_get(sub_forum_id, thread_id, message_id):
-    message = subforums.get_message(message_id)
-    return render_template("update_message.html", message=message, return_url=f"/subforums/{sub_forum_id}/threads/{thread_id}")
-
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/update", methods=["POST"])
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/update", methods=["GET", "POST"])
 def update_message_post(sub_forum_id, thread_id, message_id):
+    if request.method == "GET":
+        message = subforums.get_message(message_id)
+        return render_template("update_message.html", message=message, return_url=f"/subforums/{sub_forum_id}/threads/{thread_id}")
+    
     message_content = request.form["message-content"]
     subforums.update_message(message_id, message_content)
     return redirect(f"/subforums/{sub_forum_id}/threads/{thread_id}")
 
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/delete", methods=["GET"])
-def delete_message_get(sub_forum_id, thread_id, message_id):
-    message = subforums.get_message(message_id)
-    return render_template("delete_message.html", message=message, return_url=f"/subforums/{sub_forum_id}/threads/{thread_id}")
-
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/delete", methods=["POST"])
+@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/delete", methods=["GET", "POST"])
 def delete_message_post(sub_forum_id, thread_id, message_id):
+    if request.method == "GET":
+        message = subforums.get_message(message_id)
+        return render_template("delete_message.html", message=message, return_url=f"/subforums/{sub_forum_id}/threads/{thread_id}")
+    
     subforums.delete_message(message_id)
     return redirect(f"/subforums/{sub_forum_id}/threads/{thread_id}")
 

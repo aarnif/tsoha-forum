@@ -45,13 +45,13 @@ def get_subforum(subforum_id):
     subforum = result.fetchall()
     return subforum
 
-def create_subforum(name, description, is_secret, users):
+def create_subforum(name, description, is_secret, users_with_access):
     try:
         result = db.session.execute(text("INSERT INTO subforums (name, description, is_secret) VALUES (:name, :description, :is_secret)  RETURNING id"), \
                            {"name": name, "description": description, "is_secret": is_secret})
         if is_secret:
             subforum_id = result.fetchone()[0]
-            for user_id in users:
+            for user_id in users_with_access:
                 db.session.execute(text("INSERT INTO subforum_access (subforum_id, user_id) VALUES (:subforum_id, :user_id)"), \
                                 {"subforum_id": subforum_id, "user_id": user_id})
         db.session.commit()
