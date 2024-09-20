@@ -1,15 +1,15 @@
 {% extends "layout.html" %} {% block content %}
 
-<h2>{{ subforum.name }}</h2>
+<h2>{{ subforum[0].name }}</h2>
 
 <ul>
   {% for thread in subforum %}
   <li>
-    <h2>
+    <h3>
       <a href="/subforums/{{thread.sf_id}}/threads/{{thread.t_id}}"
         >{{ thread.title }}</a
       >
-    </h2>
+    </h3>
     <p>Viestit: {{ thread.messages }}</p>
     <p>Viimeisin viesti: {{ thread.latest_message }}</p>
   </li>
