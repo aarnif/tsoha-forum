@@ -27,7 +27,7 @@ def get_all_secret_subforums_by_user(user_id):
     result = db.session.execute(text("SELECT sf.id as id, sf.name AS name, sf.description AS description, COUNT(DISTINCT t.id) AS threads, \
                                 COUNT(m.id) AS messages, MAX(m.created_at) AS lastest_message \
                                 FROM subforum_access sa \
-                                LEFT JOIN subforums sf ON sa.subforum_id = sf.id AND sa.user_id = :user_id \
+                                JOIN subforums sf ON sa.subforum_id = sf.id AND sa.user_id = :user_id \
                                 LEFT JOIN threads t ON sf.id = t.subforum_id \
                                 LEFT JOIN messages m ON t.id = m.thread_id \
                                 GROUP BY sf.id, sf.name"), {"user_id": user_id})
@@ -45,10 +45,15 @@ def get_subforum(subforum_id):
     subforum = result.fetchall()
     return subforum
 
-def create_subforum(name, description, is_secret):
+def create_subforum(name, description, is_secret, users):
     try:
-        db.session.execute(text("INSERT INTO subforums (name, description, is_secret) VALUES (:name, :description, :is_secret)"), \
+        result = db.session.execute(text("INSERT INTO subforums (name, description, is_secret) VALUES (:name, :description, :is_secret)  RETURNING id"), \
                            {"name": name, "description": description, "is_secret": is_secret})
+        if is_secret:
+            subforum_id = result.fetchone()[0]
+            for user_id in users:
+                db.session.execute(text("INSERT INTO subforum_access (subforum_id, user_id) VALUES (:subforum_id, :user_id)"), \
+                                {"subforum_id": subforum_id, "user_id": user_id})
         db.session.commit()
         return True
     except:

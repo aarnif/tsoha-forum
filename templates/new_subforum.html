@@ -13,10 +13,23 @@
       <label>Salainen:</label>
     </li>
     <li>
-      <select name="is-secret">
+      <select name="is-secret" onchange="toggleDisplayUserList()">
         <option value="0">Ei</option>
         <option value="1">Kyllä</option>
       </select>
+    </li>
+    <li id="user-list" style="display: none">
+      <ul>
+        <li>
+          <label>Pääsyoikeus:</label>
+        </li>
+        {% for user in basic_users %}
+        <li>
+          <input type="checkbox" name="users" value="{{ user.id }}" />
+          {{ user.username }}
+        </li>
+        {% endfor %}
+      </ul>
     </li>
     <li>
       <label>Kuvaus:</label>
@@ -38,5 +51,17 @@
     </li>
   </ul>
 </form>
+
+<script>
+  const toggleDisplayUserList = () => {
+    const isSecret = document.querySelector("select");
+    const userList = document.getElementById("user-list");
+    if (isSecret.value == 1) {
+      userList.style.display = "block";
+    } else {
+      userList.style.display = "none";
+    }
+  };
+</script>
 
 {% endblock %}

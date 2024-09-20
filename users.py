@@ -8,6 +8,11 @@ def get_user(username):
     user = result.fetchone()
     return user
 
+def get_all_basic_users():
+    result = db.session.execute(text("SELECT id, username, role FROM users WHERE role=0"))
+    users = result.fetchall()
+    return users
+
 def logout():
     del session["user_id"]
     del session["username"]
