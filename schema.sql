@@ -17,7 +17,7 @@ CREATE TABLE subforums (
 
 CREATE TABLE subforum_access (
     id SERIAL PRIMARY KEY,
-    subforum_id INTEGER REFERENCES subforums,
+    subforum_id INTEGER REFERENCES subforums ON DELETE CASCADE,
     user_id INTEGER REFERENCES users
 );
 
