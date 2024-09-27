@@ -45,7 +45,7 @@ def register():
 
         if not users.create_user(username, password, role):
             return render_template("register.html",
-    message="Rekisteröinti ei onnistunut! Ole hyvä ja yritä uudelleen.")
+                    message="Rekisteröinti ei onnistunut! Ole hyvä ja yritä uudelleen.")
 
         users.login(username, password)
 
@@ -95,7 +95,7 @@ def new_subforum_post():
 
         if not subforums.create_subforum(name, description, is_secret, users_with_access):
             return render_template("new_subforum.html",
-    message="Virhe luotaessa uutta aluealuetta! Ole hyvä ja yritä uudelleen.")
+                    message="Virhe luotaessa uutta aluealuetta! Ole hyvä ja yritä uudelleen.")
 
         return redirect("/")
 
@@ -116,6 +116,7 @@ def thread(sub_forum_id, thread_id):
     if request.method == "POST":
         message_content = request.form["message-content"]
         subforums.add_message_to_thread(thread_id, session["user_id"], message_content)
+
     thread = subforums.get_thread(thread_id)
     return render_template("thread.html", thread=thread, return_url= f"/subforums/{sub_forum_id}")
 
@@ -149,7 +150,7 @@ def update_thread(sub_forum_id, thread_id):
 
     if request.method == "GET":
         return render_template("update_thread.html",
-thread=thread, return_url=return_url, message="")
+                               thread=thread, return_url=return_url, message="")
 
     if request.method == "POST":
         title = request.form["title"]
@@ -172,7 +173,7 @@ def delete_thread_post(sub_forum_id, thread_id):
     if request.method == "GET":
         thread = subforums.get_thread(thread_id)
         return render_template("delete_thread.html", thread=thread,
-return_url=f"/subforums/{sub_forum_id}")
+                               return_url=f"/subforums/{sub_forum_id}")
 
     if request.method == "POST":
         subforums.delete_thread(thread_id)
