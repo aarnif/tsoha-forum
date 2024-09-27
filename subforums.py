@@ -4,7 +4,8 @@ from db import db
 def get_all_subforums():
     result = db.session.execute(text("SELECT sf.id as id, sf.name AS name, \
                                 sf.description AS description, COUNT(DISTINCT t.id) AS threads, \
-                                COUNT(m.id) AS messages, MAX(m.created_at) AS latest_message \
+                                COUNT(m.id) AS messages, \
+                                TO_CHAR(MAX(m.created_at), 'DD-MM-YYYY HH24:MI') AS latest_message \
                                 FROM subforums sf \
                                 LEFT JOIN threads t ON sf.id = t.subforum_id \
                                 LEFT JOIN messages m ON t.id = m.thread_id \
@@ -16,7 +17,8 @@ def get_all_subforums():
 def get_all_secret_subforums():
     result = db.session.execute(text("SELECT sf.id as id, sf.name AS name, \
                                 sf.description AS description, COUNT(DISTINCT t.id) AS threads, \
-                                COUNT(m.id) AS messages, MAX(m.created_at) AS latest_message \
+                                COUNT(m.id) AS messages, \
+                                TO_CHAR(MAX(m.created_at), 'DD-MM-YYYY HH24:MI') AS latest_message \
                                 FROM subforums sf \
                                 LEFT JOIN threads t ON sf.id = t.subforum_id \
                                 LEFT JOIN messages m ON t.id = m.thread_id \
@@ -28,7 +30,8 @@ def get_all_secret_subforums():
 def get_all_secret_subforums_by_user(user_id):
     result = db.session.execute(text("SELECT sf.id as id, sf.name AS name, \
                                 sf.description AS description, COUNT(DISTINCT t.id) AS threads, \
-                                COUNT(m.id) AS messages, MAX(m.created_at) AS latest_message \
+                                COUNT(m.id) AS messages, \
+                                TO_CHAR(MAX(m.created_at), 'DD-MM-YYYY HH24:MI') AS latest_message \
                                 FROM subforum_access sa \
                                 JOIN subforums sf ON sa.subforum_id = sf.id AND sa.user_id = :user_id \
                                 LEFT JOIN threads t ON sf.id = t.subforum_id \
@@ -41,7 +44,7 @@ def get_subforum(subforum_id):
     result = db.session.execute(text("SELECT sf.id as sf_id, sf.name AS name, \
                                     t.creator_id as t_creator_id, t.id AS t_id, \
                                     t.title AS title, COUNT(m.id) AS messages, \
-                                    MAX(m.created_at) AS latest_message \
+                                    TO_CHAR(MAX(m.created_at), 'DD-MM-YYYY HH24:MI') AS latest_message \
                                     FROM \
                                         subforums sf LEFT JOIN threads t ON sf.id = t.subforum_id \
                                         LEFT JOIN messages m ON t.id = m.thread_id \
@@ -71,8 +74,9 @@ def delete_subforum(subforum_id):
 
 def get_thread(thread_id):
     result = db.session.execute(text("SELECT t.id as t_id, t.title AS title, m.id AS m_id, \
-                                     username, m.content AS content, m.created_at AS created_at, \
-                                     m.updated_at AS updated_at \
+                                     username, m.content AS content, \
+                                     TO_CHAR(m.created_at, 'DD-MM-YYYY HH24:MI') AS created_at, \
+                                     TO_CHAR(m.updated_at, 'DD-MM-YYYY HH24:MI') AS updated_at \
                                     FROM \
                                         threads t LEFT JOIN messages m ON m.thread_id = t.id \
                                     LEFT JOIN users u ON m.creator_id = u.id \
@@ -125,7 +129,8 @@ def add_message_to_thread(thread_id, user_id, message_content):
 
 def get_message(message_id):
     result = db.session.execute(text("SELECT id, thread_id, creator_id, \
-                                     content, created_at, updated_at \
+                                     content, TO_CHAR(created_at, 'DD-MM-YYYY HH24:MI') as created_at,\
+                                     TO_CHAR(updated_at, 'DD-MM-YYYY HH24:MI') as updated_at \
                                      FROM messages WHERE id = :message_id"),
                                        {"message_id": message_id})
     message = result.fetchone()
@@ -148,8 +153,9 @@ def delete_message(message_id):
 def search_messages(query):
     result = db.session.execute(text("SELECT m.id, s.id as subforum_id, thread_id, \
                                     s.name as subforum_name, t.title as thread_title, \
-                                    u.username as sender, m.created_at, content  \
-                                    FROM messages m  LEFT JOIN threads t ON m.thread_id = t.id \
+                                    u.username as sender, \
+                                    TO_CHAR(m.created_at, 'DD-MM-YYYY HH24:MI') as created_at, content  \
+                                    FROM messages m LEFT JOIN threads t ON m.thread_id = t.id \
                                     LEFT JOIN subforums s ON t.subforum_id = s.id \
                                     LEFT JOIN users u ON m.creator_id = u.id \
                                     WHERE s.is_secret = FALSE and content LIKE :query"),
