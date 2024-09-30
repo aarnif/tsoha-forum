@@ -7,6 +7,49 @@ main {
   align-items: center;
 }
 
+.login-container {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+.login-form {
+  position: relative;
+  top: 100px;
+  flex-grow: 1;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+
+.form-items {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item {
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item > a {
+  width: 100%;
+}
+
+.login-form-button {
+  min-width: 100%;
+  max-width: 100%;
+  margin-top: 10px;
+}
+
 .main-content {
   flex-grow: 1;
   width: 100%;

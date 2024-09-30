@@ -1,24 +1,38 @@
 {% extends "layout.html" %} {% block content %}
-<h2>Kirjaudu sisään:</h2>
-<form action="/login" method="POST">
-  <ul>
-    <li>
-      <label>Tunnus:</label>
-    </li>
-    <li>
-      <input type="text" name="username" />
-    </li>
-    <li>
-      <label>Salasana:</label>
-    </li>
-    <li>
-      <input type="password" name="password" />
-    </li>
-    <li>
-      <button type="submit">Kirjaudu</button>
-    </li>
-  </ul>
-</form>
-<p>{{ message }}</p>
-<button><a href="/register">Luo tunnus</a></button>
+
+<div class="login-container">
+  <form action="/login" method="POST" class="login-form">
+    <h2>Kirjaudu sisään:</h2>
+    <ul class="form-items">
+      <li class="form-item">
+        <p class="error-message">{{ message }}</p>
+      </li>
+      <li class="form-item">
+        <label>Tunnus:</label>
+      </li>
+      <li class="form-item">
+        <input type="text" name="username" value="{{username}}" />
+      </li>
+      <li class="form-item">
+        <label>Salasana:</label>
+      </li>
+      <li class="form-item">
+        <input type="password" name="password" value="{{password}}" />
+      </li>
+      <li class="form-item">
+        <button id="log-in-button" class="login-form-button" type="submit">
+          Kirjaudu
+        </button>
+      </li>
+      <li class="form-item">
+        <a href="/register">
+          <button id="register-button" class="login-form-button" type="button">
+            Luo tunnus
+          </button></a
+        >
+      </li>
+    </ul>
+  </form>
+</div>
+
 {% endblock %}
