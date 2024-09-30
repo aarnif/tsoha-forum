@@ -3,12 +3,17 @@
 :root {
   --text-color: #faca15;
   --text-shadow: 1px 1px 1px #7c2d12;
-  --background-color: #e0f2fe;
+  --background-color: #dbeafe;
   --header-background-color: linear-gradient(to right, #76a9fa, #1a56db);
   --header-title-color: #faca15;
   --header-content-border-color: #1e40af;
   --nav-menu-background-color: #76a9fa;
   --search-box-background-color: #bfdbfe;
+  --main-content-background-color: #eff6ff;
+  --button-background-color: #3b82f6;
+  --button-hover-background-color: #1e40af;
+  --background-color-transition: background-color 0.3s ease-in-out;
+  --scale-transition: transform 0.3s ease-in-out;
 }
 
 body {
@@ -53,4 +58,28 @@ a:hover {
 
 .search-result {
   border-bottom: 1px solid #ccc;
+}
+
+button {
+  flex-grow: 1;
+  max-width: 160px;
+  padding: 10px;
+  border: 1px solid #1e293b;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  text-shadow: var(--text-shadow);
+  background-color: var(--button-background-color);
+  transition: var(--background-color-transition);
+}
+
+button:hover {
+  text-decoration: underline;
+  background-color: var(--button-hover-background-color);
+  transition: var(--scale-transition);
+}
+
+button:active {
+  transform: scale(0.95);
 }
