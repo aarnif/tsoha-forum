@@ -1,0 +1,53 @@
+@keyframes rotateAndScale {
+  0% {
+    transform: rotate(0) scale(1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.5);
+  }
+}
+
+footer {
+  flex-grow: 1;
+  height: 100px;
+  min-height: 50px;
+  max-height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.footer-content {
+  flex-grow: 1;
+  width: 100%; /* Make sure the content spans the full width */
+  height: 100%; /* Make sure the content spans the full height */
+  max-width: 1400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--footer-background-color);
+  border: 1px solid var(--header-content-border-color);
+}
+
+.footer-text {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.github-icon {
+  width: 28px;
+  margin-left: 4px;
+  margin-right: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
+  fill: currentColor;
+}
+
+.github-icon:hover {
+  cursor: pointer;
+  animation: rotateAndScale 1s forwards;
+}
