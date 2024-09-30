@@ -10,6 +10,7 @@
   --nav-menu-background-color: #76a9fa;
   --search-box-background-color: #bfdbfe;
   --main-content-background-color: #eff6ff;
+  --footer-background-color: linear-gradient(to right, #76a9fa, #1a56db);
   --button-background-color: #3b82f6;
   --button-hover-background-color: #1e40af;
   --background-color-transition: background-color 0.3s ease-in-out;
@@ -49,7 +50,6 @@ input {
 a {
   text-decoration: none;
   color: inherit;
-  width: 100%;
 }
 
 a:hover {
