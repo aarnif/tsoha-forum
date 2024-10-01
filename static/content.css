@@ -215,6 +215,11 @@ main {
   min-width: 200px;
 }
 
+.secret-subforum-message {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
 #profile-image-container {
   min-width: 200px;
   max-width: 200px;
