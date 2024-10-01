@@ -1,56 +1,57 @@
 {% extends "layout.html" %} {% block content %}
 
-<form action="{{request.url}}" method="POST">
-  <h2>Luo uusi alue</h2>
-  <ul>
-    <li>
-      <label>Nimi:</label>
-    </li>
-    <li>
-      <input type="text" name="name" />
-    </li>
-    <li>
-      <label>Salainen:</label>
-    </li>
-    <li>
-      <select name="is-secret" onchange="toggleDisplayUserList()">
-        <option value="0">Ei</option>
-        <option value="1">Kyllä</option>
-      </select>
-    </li>
-    <li id="user-list" style="display: none">
-      <ul>
-        <li>
-          <label>Pääsyoikeus:</label>
-        </li>
-        {% for user in basic_users %}
-        <li>
-          <input type="checkbox" name="users" value="{{ user.id }}" />
-          {{ user.username }}
-        </li>
-        {% endfor %}
-      </ul>
-    </li>
-    <li>
-      <label>Kuvaus:</label>
-    </li>
-    <li>
-      <textarea name="description" rows="8" cols="40"></textarea>
-    </li>
-  </ul>
-
-  <ul>
-    <li>
-      <button type="button"><a href="/">Peruuta</a></button>
-    </li>
-    <li>
-      <button type="submit">Luo Alue</button>
-    </li>
-    <li>
-      <p>{{ message }}</p>
-    </li>
-  </ul>
-</form>
+<div class="form-container">
+  <form action="{{request.url}}" method="POST" class="form">
+    <h2>Luo uusi alue</h2>
+    <ul class="form-items">
+      <li class="form-item">
+        <label>Nimi:</label>
+      </li>
+      <li class="form-item">
+        <input type="text" name="name" />
+      </li>
+      <li class="form-item">
+        <label>Salainen:</label>
+      </li>
+      <li class="form-item">
+        <select name="is-secret" onchange="toggleDisplayUserList()">
+          <option value="0">Ei</option>
+          <option value="1">Kyllä</option>
+        </select>
+      </li>
+      <li id="user-list" class="form-item" style="display: none">
+        <ul>
+          <li>
+            <label>Pääsyoikeus:</label>
+          </li>
+          {% for user in basic_users %}
+          <li>
+            <input type="checkbox" name="users" value="{{ user.id }}" />
+            {{ user.username }}
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+      <li class="form-item">
+        <label>Kuvaus:</label>
+      </li>
+      <li class="form-item">
+        <textarea name="description" rows="8" cols="40"></textarea>
+      </li>
+      <li class="form-item">
+        <button type="button" class="form-button">
+          <a href="/">Peruuta</a>
+        </button>
+      </li>
+      <li class="form-item">
+        <button type="submit" class="form-button">Luo Alue</button>
+      </li>
+      <li class="form-item">
+        <p>{{ message }}</p>
+      </li>
+    </ul>
+  </form>
+</div>
 
 <script>
   const toggleDisplayUserList = () => {

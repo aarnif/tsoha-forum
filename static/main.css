@@ -40,11 +40,17 @@ li {
   list-style: none;
 }
 
-input {
+input,
+select,
+textarea {
   padding: 10px;
   border: 1px solid #1e293b;
   border-radius: 5px;
   font-size: 1.2rem;
+}
+
+textarea {
+  resize: vertical;
 }
 
 a {

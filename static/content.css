@@ -7,7 +7,7 @@ main {
   align-items: center;
 }
 
-.login-container {
+.form-container {
   flex-grow: 1;
   width: 100%;
   max-width: 1400px;
@@ -16,9 +16,11 @@ main {
   align-items: start;
 }
 
-.login-form {
+.form {
   position: relative;
   top: 100px;
+  padding-left: 20px;
+  padding-right: 20px;
   flex-grow: 1;
   max-width: 800px;
   display: flex;
@@ -44,7 +46,7 @@ main {
   width: 100%;
 }
 
-.login-form-button {
+.form-button {
   min-width: 100%;
   max-width: 100%;
   margin-top: 10px;

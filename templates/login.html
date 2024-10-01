@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block content %}
 
-<div class="login-container">
-  <form action="/login" method="POST" class="login-form">
+<div class="form-container">
+  <form action="/login" method="POST" class="form">
     <h2>Kirjaudu sisään:</h2>
     <ul class="form-items">
       <li class="form-item">
@@ -20,13 +20,13 @@
         <input type="password" name="password" value="{{password}}" />
       </li>
       <li class="form-item">
-        <button id="log-in-button" class="login-form-button" type="submit">
+        <button id="log-in-button" class="form-button" type="submit">
           Kirjaudu
         </button>
       </li>
       <li class="form-item">
         <a href="/register">
-          <button id="register-button" class="login-form-button" type="button">
+          <button id="register-button" class="form-button" type="button">
             Luo tunnus
           </button></a
         >
