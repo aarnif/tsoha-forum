@@ -58,10 +58,11 @@
           </svg></button
       ></a>
     </li>
+    {% endif %}
   </ul>
 </div>
 
-{% endif %} {% endfor %}
+{% endfor %}
 
 <h2 class="subforums-title">Salaiset Alueet</h2>
 {% if secret_subforums|length == 0 or secret_subforums[0].name == None %}

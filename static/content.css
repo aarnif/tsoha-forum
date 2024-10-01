@@ -65,11 +65,13 @@ main {
   border-right: 1px solid var(--header-content-border-color);
 }
 
-.subforums-title {
+.subforums-title,
+.subforum-title {
   padding: 10px;
 }
 
-.subforum-items-container {
+.subforum-items-container,
+.thread-items-container {
   width: 100%;
   display: flex;
   justify-content: start;
@@ -77,14 +79,17 @@ main {
   border-bottom: 1px solid var(--header-content-border-color);
 }
 
-.subforum-items {
+.subforum-items,
+.thread-items {
+  min-height: 100px;
   flex-grow: 1;
   display: flex;
   justify-content: start;
   align-items: center;
 }
 
-.subforum-item {
+.subforum-item,
+.thread-item {
   flex-grow: 1;
   flex-shrink: 1;
   display: flex;
@@ -93,18 +98,21 @@ main {
   align-items: center;
 }
 
-#subforum-icon-container {
+#subforum-icon-container,
+#thread-icon-container {
   min-width: 100px;
   max-width: 100px;
 }
 
-.subforum-icon {
+.subforum-icon,
+.thread-icon {
   width: 60px;
   color: var(--text-color);
   fill: currentColor;
 }
 
-#subforum-title-and-description {
+#subforum-title-and-description,
+#thread-title-and-description {
   align-items: start;
   flex-grow: 1;
   max-width: 800px;
@@ -119,11 +127,13 @@ main {
   font-weight: 400;
 }
 
-#subforum-statistics {
+#subforum-statistics,
+#thread-statistics {
   max-width: 100px;
 }
 
-.subforum-descriptive-name {
+.subforum-descriptive-name,
+.thread-descriptive-name {
   margin-bottom: 5px;
 }
 
@@ -131,29 +141,52 @@ main {
   max-width: 200px;
 }
 
-#delete-subforum {
+#update-subforum,
+#update-thread,
+#delete-subforum,
+#delete-thread {
   max-width: 50px;
 }
 
-.delete-subforum-button {
+.delete-subforum-button,
+.delete-thread-button {
   all: unset;
 }
 
-.delete-subforum-button:hover {
+.delete-subforum-button:hover,
+.delete-thread-button:hover {
   all: unset;
   cursor: pointer;
 }
 
-.delete-subforum-icon {
+.delete-subforum-icon,
+.update-subforum-icon,
+.delete-thread-icon,
+.update-thread-icon {
   width: 30px;
   color: var(--text-color);
   fill: currentColor;
 }
 
-.new-subforum-button-container {
+.new-subforum-button-container,
+.new-thread-button-container {
   width: 100%;
   flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.thread-icon {
+  width: 45px;
+  color: var(--text-color);
+  fill: currentColor;
+}
+
+#button-item {
+  align-items: center;
+}
+
+#button-item > button {
+  min-width: 200px;
 }
