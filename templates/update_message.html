@@ -1,44 +1,39 @@
 {% extends "layout.html" %} {% block content %}
 
-<h2>Viesti:</h2>
+<div class="form-container">
+  <form action="{{request.url}}" method="POST" class="form">
+    <h2>Viesti:</h2>
+    <ul class="form-items">
+      <li class="form-item">
+        <p>Lähetetty: {{ message.created_at }}</p>
+      </li>
 
-<form action="{{request.url}}" method="POST">
-  <ul>
-    <li>
-      <p>Lähetetty:</p>
-    </li>
-    <li>
-      <p>{{ message.created_at }}</p>
-    </li>
+      {% if message.created_at != message.updated_at %}
+      <li class="form-item">
+        <p>Päivitetty viimeksi: {{ message.updated_at }}</p>
+      </li>
+      {% endif %}
 
-    {% if message.created_at != message.updated_at %}
-    <li>
-      <p>Päivitetty viimeksi:</p>
-    </li>
-    <li>
-      <p>{{ message.updated_at }}</p>
-    </li>
-    {% endif %}
+      <li class="form-item">
+        <label>Sisältö:</label>
+      </li>
 
-    <li>
-      <label>Sisältö:</label>
-    </li>
-
-    <li>
-      <textarea name="message-content" rows="8" cols="40">
+      <li class="form-item">
+        <textarea name="message-content" rows="8" cols="40">
 {{ message.content }}</textarea
-      >
-    </li>
-  </ul>
+        >
+      </li>
 
-  <ul>
-    <li>
-      <button type="button"><a href="{{return_url}}">Takaisin</a></button>
-    </li>
-    <li>
-      <button type="submit">Päivitä</button>
-    </li>
-  </ul>
-</form>
+      <li class="form-item">
+        <a href="{{return_url}}"
+          ><button type="button" class="form-button">Takaisin</button></a
+        >
+      </li>
+      <li class="form-item">
+        <button type="submit" class="form-button">Päivitä</button>
+      </li>
+    </ul>
+  </form>
+</div>
 
 {% endblock %}
