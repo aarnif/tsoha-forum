@@ -111,14 +111,14 @@ main {
   fill: currentColor;
 }
 
-#subforum-title-and-description,
+#subforum-name-and-description,
 #thread-title-and-description {
   align-items: start;
   flex-grow: 1;
   max-width: 800px;
 }
 
-.subforum-title {
+.subforum-name {
   margin-bottom: 5px;
 }
 

@@ -1,34 +1,37 @@
 {% extends "layout.html" %} {% block content %}
 
-<form action="{{request.url}}" method="POST">
-  <ul>
-    <li>
-      <label>Otsikko:</label>
-    </li>
-    <li>
-      <input type="text" name="title" />
-    </li>
+<div class="form-container">
+  <form action="{{request.url}}" method="POST" class="form">
+    <h2>Luo uusi ketju</h2>
+    <ul class="form-items">
+      <li class="form-item">
+        <label>Otsikko:</label>
+      </li>
+      <li class="form-item">
+        <input type="text" name="title" />
+      </li>
 
-    <li>
-      <label>Ensimmäinen viesti</label>
-    </li>
+      <li class="form-item">
+        <label>Ensimmäinen viesti</label>
+      </li>
 
-    <li>
-      <textarea name="message-content" rows="8" cols="40"></textarea>
-    </li>
-  </ul>
+      <li class="form-item">
+        <textarea name="message-content" rows="8" cols="40"></textarea>
+      </li>
 
-  <ul>
-    <li>
-      <button type="button"><a href="{{return_url}}">Peruuta</a></button>
-    </li>
-    <li>
-      <button type="submit">Luo Ketju</button>
-    </li>
-    <li>
-      <p>{{ message }}</p>
-    </li>
-  </ul>
-</form>
+      <li class="form-item">
+        <button type="button" class="form-button">
+          <a href="{{return_url}}">Peruuta</a>
+        </button>
+      </li>
+      <li class="form-item">
+        <button type="submit" class="form-button">Luo Ketju</button>
+      </li>
+      <li class="form-item">
+        <p>{{ message }}</p>
+      </li>
+    </ul>
+  </form>
+</div>
 
 {% endblock %}
