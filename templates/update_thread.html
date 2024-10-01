@@ -1,27 +1,30 @@
 {% extends "layout.html" %} {% block content %}
 
-<h2>Ketju:</h2>
+<div class="form-container">
+  <form action="{{request.url}}" method="POST" class="form">
+    <h2>Ketju:</h2>
+    <ul class="form-items">
+      <li class="form-item">
+        <p class="error-message">{{ message }}</p>
+      </li>
+      <li class="form-item">
+        <label>Otsikko:</label>
+      </li>
 
-<form action="{{request.url}}" method="POST">
-  <ul>
-    <li>
-      <label>Otsikko:</label>
-    </li>
+      <li class="form-item">
+        <input type="text" name="title" value="{{thread[0].title}}" />
+      </li>
 
-    <li>
-      <input type="text" name="title" value="{{thread[0].title}}" />
-    </li>
-  </ul>
-
-  <ul>
-    <li>
-      <button type="button"><a href="{{return_url}}">Takaisin</a></button>
-    </li>
-    <li>
-      <button type="submit">Päivitä</button>
-    </li>
-  </ul>
-</form>
-<p>{{ message }}</p>
+      <li class="form-item">
+        <a href="{{return_url}}">
+          <button type="button" class="form-button">Takaisin</button></a
+        >
+      </li>
+      <li class="form-item">
+        <button type="submit" class="form-button">Päivitä</button>
+      </li>
+    </ul>
+  </form>
+</div>
 
 {% endblock %}
