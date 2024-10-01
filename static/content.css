@@ -29,6 +29,22 @@ main {
   align-items: start;
 }
 
+#message-form-container {
+  flex-grow: 1;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#message-form {
+  flex-grow: 1;
+  max-width: 1000px;
+  position: static;
+}
+
 .form-items {
   width: 100%;
   display: flex;
@@ -66,17 +82,25 @@ main {
 }
 
 .subforums-title,
-.subforum-title {
+.subforum-title,
+.thread-title {
   padding: 10px;
 }
 
 .subforum-items-container,
-.thread-items-container {
+.thread-items-container,
+.message-items-container {
   width: 100%;
   display: flex;
   justify-content: start;
   align-items: center;
   border-bottom: 1px solid var(--header-content-border-color);
+}
+
+.message-items-container {
+  border-bottom: none;
+  margin-bottom: 10px;
+  background-color: var(--message-items-container-background-color);
 }
 
 .subforum-items,
@@ -189,4 +213,61 @@ main {
 
 #button-item > button {
   min-width: 200px;
+}
+
+#profile-image-container {
+  min-width: 200px;
+  max-width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--profile-image-container-background-color);
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: var(--profile-image-background-color);
+}
+
+.message-container {
+  width: 100%;
+  height: 200px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+
+.message-top-items {
+  width: 100%;
+  padding-top: 5px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  border-bottom: 1px solid var(--header-content-border-color);
+}
+
+.message-top-items > li {
+  flex-grow: 1;
+  max-width: 50px;
+}
+
+.message-top-items > li:first-child {
+  max-width: 100%;
+}
+
+.message-content {
+  margin-top: 10px;
+  height: 100%;
+}
+
+.message-update-info {
+  width: 100%;
+  display: flex;
+  justify-content: end;
 }

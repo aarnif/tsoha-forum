@@ -13,6 +13,9 @@
   --footer-background-color: linear-gradient(to right, #76a9fa, #1a56db);
   --button-background-color: #3b82f6;
   --button-hover-background-color: #1e40af;
+  --message-items-container-background-color: white;
+  --profile-image-container-background-color: #76a9fa;
+  --profile-image-background-color: #3b82f6;
   --background-color-transition: background-color 0.3s ease-in-out;
   --scale-transition: transform 0.3s ease-in-out;
 }
