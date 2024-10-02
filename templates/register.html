@@ -1,45 +1,49 @@
 {% extends "layout.html" %} {% block content %}
-<form action="/register" method="POST">
-  <h2>Luo uusi käyttäjä:</h2>
 
-  <ul>
-    <li>
-      <label>Rooli:</label>
-    </li>
-    <li>
-      <select name="role">
-        <option value="0">Käyttäjä</option>
-        <option value="1">Ylläpitäjä</option>
-      </select>
-    </li>
-    <li>
-      <label>Tunnus:</label>
-    </li>
-    <li>
-      <input type="text" name="username" />
-    </li>
-    <li>
-      <label>Salasana:</label>
-    </li>
-    <li>
-      <input type="password" name="password" />
-    </li>
-    <li>
-      <label>Vahvista Salasana:</label>
-    </li>
-    <li>
-      <input type="password" name="confirm-password" />
-    </li>
-  </ul>
-
-  <ul>
-    <li>
-      <button type="submit">Luo Tunnus</button>
-    </li>
-    <li>
-      <button type="button"><a href="/login">Takaisin</a></button>
-    </li>
-  </ul>
-</form>
-<p>{{ message }}</p>
+<div class="form-container">
+  <form action="/register" method="POST" class="form">
+    <h2>Luo uusi käyttäjä:</h2>
+    <ul class="form-items">
+      <li id="error-message-box" class="form-item">
+        <p class="error-message">{{ message }}</p>
+      </li>
+      <li class="form-item">
+        <label>Rooli:</label>
+      </li>
+      <li class="form-item">
+        <select name="role">
+          <option value="0">Käyttäjä</option>
+          <option value="1">Ylläpitäjä</option>
+        </select>
+      </li>
+      <li class="form-item">
+        <label>Tunnus:</label>
+      </li>
+      <li class="form-item">
+        <input type="text" name="username" />
+      </li>
+      <li class="form-item">
+        <label>Salasana:</label>
+      </li>
+      <li class="form-item">
+        <input type="password" name="password" />
+      </li>
+      <li class="form-item">
+        <label>Vahvista Salasana:</label>
+      </li>
+      <li class="form-item">
+        <input type="password" name="confirm-password" />
+      </li>
+      <li class="form-item">
+        <button type="submit" class="form-button">Luo Tunnus</button>
+      </li>
+      <li class="form-item">
+        <a href="/login">
+          <button type="button" class="form-button">Takaisin</button>
+        </a>
+      </li>
+    </ul>
+  </form>
+</div>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
 {% endblock %}
