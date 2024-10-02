@@ -2,14 +2,10 @@
 
 <div class="form-container">
   <form action="{{request.url}}" method="POST" class="form">
-    <h2>Haluatko varmasti poistaa alueen?</h2>
+    <h2 class="delete-form-title">
+      Haluatko varmasti poistaa alueen <i>{{ subforum[0].name }}</i>?
+    </h2>
     <ul class="form-items">
-      <li class="form-item">
-        <p>Alue:</p>
-      </li>
-      <li class="form-item">
-        <p>{{ subforum[0].name }}</p>
-      </li>
       <li class="form-item">
         <a href="/"><button type="button" class="form-button">En</button></a>
       </li>

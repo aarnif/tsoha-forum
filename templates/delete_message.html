@@ -2,14 +2,13 @@
 
 <div class="form-container">
   <form action="{{request.url}}" method="POST" class="form">
-    <h2>Haluatko varmasti poistaa viestin?</h2>
+    <h2 class="delete-form-title">
+      Haluatko varmasti poistaa viestin?</i>
+    </h2>
+    <h3 class="delete-form-content">
+      <i>"{{ message.content }}"</i>
+    </h2>
     <ul class="form-items">
-      <li class="form-item">
-        <p>Sisältö:</p>
-      </li>
-      <li class="form-item">
-        <p>{{ message.content }}</p>
-      </li>
       <li class="form-item">
         <a href="{{return_url}}">
           <button type="button" class="form-button">En</button></a

@@ -4,6 +4,9 @@
   <form action="{{request.url}}" method="POST" class="form">
     <h2>Viesti:</h2>
     <ul class="form-items">
+      <li id="error-message-box" class="form-item">
+        <p class="error-message">{{ message }}</p>
+      </li>
       <li class="form-item">
         <p>Lähetetty: {{ message.created_at }}</p>
       </li>
