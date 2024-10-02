@@ -101,7 +101,9 @@ nav {
 }
 
 .search-icon {
-  width: 24px;
+  width: 20px;
+  color: var(--search-icon-color);
+  fill: currentColor;
 }
 
 .search-button {
@@ -110,4 +112,12 @@ nav {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: var(--search-box-background-color);
+}
+
+.search-icon:hover {
+  color: var(--search-icon-hover-color);
 }
