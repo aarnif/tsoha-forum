@@ -16,6 +16,8 @@
   --message-items-container-background-color: white;
   --profile-image-container-background-color: #76a9fa;
   --profile-image-background-color: #3b82f6;
+  --error-message-background-color: #f87171;
+  --error-message-text-color: #b91c1c;
   --background-color-transition: background-color 0.3s ease-in-out;
   --scale-transition: transform 0.3s ease-in-out;
 }
@@ -25,7 +27,7 @@ body {
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
   color: var(--text-color);
-  text-shadow: var(--text-shadow);
+  /* text-shadow: var(--text-shadow); */
   background-color: var(--background-color);
 }
 
@@ -91,4 +93,15 @@ button:hover {
 
 button:active {
   transform: scale(0.95);
+}
+
+#error-message-box {
+  display: none;
+}
+
+.error-message {
+  background-color: var(--error-message-background-color);
+  color: var(--error-message-text-color);
+  padding: 10px;
+  border-radius: 5px;
 }

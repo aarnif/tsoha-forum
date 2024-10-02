@@ -4,7 +4,7 @@
   <form action="/login" method="POST" class="form">
     <h2>Kirjaudu sisään:</h2>
     <ul class="form-items">
-      <li class="form-item">
+      <li id="error-message-box" class="form-item">
         <p class="error-message">{{ message }}</p>
       </li>
       <li class="form-item">
@@ -34,5 +34,22 @@
     </ul>
   </form>
 </div>
+<script>
+  const toggleDisplayErrorMessageBox = () => {
+    const displayTime = 3000;
+    const errorMessageBox = document.getElementById("error-message-box");
+    const errorMessage = document.querySelector(".error-message");
+    if (errorMessage.textContent === "") {
+      return;
+    } else {
+      console.log("Error message:", errorMessage.textContent);
+      errorMessageBox.style.display = "block";
+      setTimeout(() => {
+        errorMessageBox.style.display = "none";
+      }, displayTime);
+    }
+  };
+  toggleDisplayErrorMessageBox();
+</script>
 
 {% endblock %}
