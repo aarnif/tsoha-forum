@@ -74,7 +74,7 @@ main {
   max-width: 1400px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: start;
   background-color: var(--main-content-background-color);
   border-left: 1px solid var(--header-content-border-color);
@@ -89,7 +89,8 @@ main {
 
 .subforum-items-container,
 .thread-items-container,
-.message-items-container {
+.message-items-container,
+.search-result-items-container {
   width: 100%;
   display: flex;
   justify-content: start;
@@ -97,7 +98,8 @@ main {
   border-bottom: 1px solid var(--header-content-border-color);
 }
 
-.message-items-container {
+.message-items-container,
+.search-result-items-container {
   border-bottom: none;
   margin-bottom: 10px;
   background-color: var(--message-items-container-background-color);
@@ -237,9 +239,10 @@ main {
   background-color: var(--profile-image-background-color);
 }
 
-.message-container {
+.message-container,
+.search-result-container {
   width: 100%;
-  height: 200px;
+  min-height: 200px;
   padding-left: 10px;
   padding-right: 10px;
   display: flex;
@@ -248,13 +251,30 @@ main {
   align-items: start;
 }
 
-.message-top-items {
+.search-result-container {
+  min-height: auto;
+}
+
+.message-top-items,
+.search-result-top-items,
+.search-result-bottom-items {
+  flex-grow: 1;
+  max-height: 50px;
   width: 100%;
   padding-top: 5px;
   display: flex;
   justify-content: start;
   align-items: center;
   border-bottom: 1px solid var(--header-content-border-color);
+}
+
+.search-result-top-items,
+.search-result-bottom-items {
+  border-bottom: none;
+}
+
+.search-result-bottom-items {
+  padding-bottom: 5px;
 }
 
 .message-top-items > li {
@@ -266,13 +286,25 @@ main {
   max-width: 100%;
 }
 
-.message-content {
+.message-content,
+.search-result-content {
+  flex-grow: 1;
   margin-top: 10px;
   height: 100%;
+}
+
+.search-result-content {
+  margin-bottom: 10px;
 }
 
 .message-update-info {
   width: 100%;
   display: flex;
   justify-content: end;
+  margin-bottom: 10px;
+}
+
+.search-result-bottom-items > li,
+.search-result-bottom-items > li {
+  margin-right: 5px;
 }
