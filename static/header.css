@@ -3,6 +3,7 @@ header {
   justify-content: center;
   align-items: center;
   width: 100%;
+  color: var(--header-text-color);
 }
 
 .header-content {
@@ -23,12 +24,13 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--header-background-color);
+  background: var(--header-background);
 }
 
 .header-title-container > h1 {
   width: 100%;
   text-align: center;
+  text-shadow: var(--text-shadow);
 }
 
 nav {

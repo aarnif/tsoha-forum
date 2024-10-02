@@ -161,6 +161,7 @@ main {
 .subforum-descriptive-name,
 .thread-descriptive-name {
   margin-bottom: 5px;
+  font-weight: bold;
 }
 
 #last-message {

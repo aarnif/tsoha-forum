@@ -27,13 +27,15 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--footer-background-color);
+  background: var(--footer-background);
   border: 1px solid var(--header-content-border-color);
+  color: var(--footer-title-color);
 }
 
 .footer-text {
   margin-left: 4px;
   margin-right: 4px;
+  text-shadow: var(--text-shadow);
 }
 
 .github-icon {
@@ -43,7 +45,6 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--text-color);
   fill: currentColor;
 }
 
