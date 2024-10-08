@@ -1,3 +1,4 @@
+from functools import wraps
 from flask import render_template, request, session, redirect, url_for
 from app import app
 import users
@@ -10,6 +11,14 @@ def check_if_user_is_logged_in():
 
     if not session.get("username"):
         return redirect('/login')
+    
+def check_subforum_access(f):
+    @wraps(f)
+    def check_function(subforum_id, *args, **kwargs):
+        if not subforums.check_if_user_has_access_to_subforum(session["user_id"], subforum_id) and session["role"] != 1:
+            return redirect("/")  
+        return f(subforum_id, *args, **kwargs)
+    return check_function
 
 
 @app.route("/")
@@ -82,10 +91,8 @@ def logout():
 
 # Sub forum routes
 @app.route("/subforums/<int:subforum_id>")
+@check_subforum_access
 def sub_forum(subforum_id):
-    if not subforums.check_if_user_has_access_to_subforum(session["user_id"], subforum_id):
-        return redirect("/")
-    
     subforum = subforums.get_subforum(subforum_id)
     return render_template("subforum.html", subforum=subforum)
 
@@ -112,6 +119,7 @@ def new_subforum_post():
         return redirect("/")
 
 @app.route("/subforums/<int:subforum_id>/delete", methods=["GET", "POST"])
+@check_subforum_access
 def delete_subforum(subforum_id):
     if request.method == "GET":
         subforum = subforums.get_subforum(subforum_id)
@@ -123,22 +131,20 @@ def delete_subforum(subforum_id):
 
 
 # Thread routes
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>", methods=["GET", "POST"])
-def thread(sub_forum_id, thread_id):
-    if not subforums.check_if_user_has_access_to_subforum(session["user_id"], sub_forum_id):
-        return redirect("/")
-    
+@app.route("/subforums/<int:subforum_id>/threads/<int:thread_id>", methods=["GET", "POST"])
+@check_subforum_access
+def thread(subforum_id, thread_id):
     if request.method == "POST":
         message_content = request.form["message-content"]
         subforums.add_message_to_thread(thread_id, session["user_id"], message_content)
 
     thread = subforums.get_thread(thread_id)
-    return render_template("thread.html", thread=thread, return_url= f"/subforums/{sub_forum_id}")
+    return render_template("thread.html", thread=thread, return_url= f"/subforums/{subforum_id}")
 
-@app.route("/subforums/<int:sub_forum_id>/threads/new", methods=["GET", "POST"])
-def new_thread(sub_forum_id):
+@app.route("/subforums/<int:subforum_id>/threads/new", methods=["GET", "POST"])
+def new_thread(subforum_id):
     if request.method == "GET":
-        return render_template("new_thread.html", return_url=f"/subforums/{sub_forum_id}")
+        return render_template("new_thread.html", return_url=f"/subforums/{subforum_id}")
 
     if request.method == "POST":
         title = request.form["title"]
@@ -151,16 +157,16 @@ def new_thread(sub_forum_id):
         if len(message_content) < 1:
             return render_template("new_thread.html", message="Viesti ei voi olla tyhjä!")
 
-        if not subforums.create_thread(sub_forum_id, session["user_id"], title, message_content):
+        if not subforums.create_thread(subforum_id, session["user_id"], title, message_content):
             return render_template("new_thread.html",
                                    message="Virhe luotaessa uutta ketjua! \
                                    Ole hyvä ja yritä uudelleen.")
 
-        return redirect(f"/subforums/{sub_forum_id}")
+        return redirect(f"/subforums/{subforum_id}")
 
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/update", methods=["GET", "POST"])
-def update_thread(sub_forum_id, thread_id):
-    return_url=f"/subforums/{sub_forum_id}"
+@app.route("/subforums/<int:subforum_id>/threads/<int:thread_id>/update", methods=["GET", "POST"])
+def update_thread(subforum_id, thread_id):
+    return_url=f"/subforums/{subforum_id}"
     thread = subforums.get_thread(thread_id)
 
     if request.method == "GET":
@@ -181,45 +187,45 @@ def update_thread(sub_forum_id, thread_id):
                                    message="Virhe päivittäessa ketjua!\
                                    Ole hyvä ja yritä uudelleen.")
 
-        return redirect(f"/subforums/{sub_forum_id}")
+        return redirect(f"/subforums/{subforum_id}")
 
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/delete", methods=["GET", "POST"])
-def delete_thread_post(sub_forum_id, thread_id):
+@app.route("/subforums/<int:subforum_id>/threads/<int:thread_id>/delete", methods=["GET", "POST"])
+def delete_thread_post(subforum_id, thread_id):
     if request.method == "GET":
         thread = subforums.get_thread(thread_id)
         return render_template("delete_thread.html", thread=thread,
-                               return_url=f"/subforums/{sub_forum_id}")
+                               return_url=f"/subforums/{subforum_id}")
 
     if request.method == "POST":
         subforums.delete_thread(thread_id)
-        return redirect(f"/subforums/{sub_forum_id}")
+        return redirect(f"/subforums/{subforum_id}")
 
 
 # Message routes
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/update",
+@app.route("/subforums/<int:subforum_id>/threads/<int:thread_id>/messages/<int:message_id>/update",
 methods=["GET", "POST"])
-def update_message_post(sub_forum_id, thread_id, message_id):
+def update_message_post(subforum_id, thread_id, message_id):
     if request.method == "GET":
         message = subforums.get_message(message_id)
         return render_template("update_message.html", message=message,
-                               return_url=f"/subforums/{sub_forum_id}/threads/{thread_id}")
+                               return_url=f"/subforums/{subforum_id}/threads/{thread_id}")
 
     if request.method == "POST":
         message_content = request.form["message-content"]
         subforums.update_message(message_id, message_content)
-        return redirect(f"/subforums/{sub_forum_id}/threads/{thread_id}")
+        return redirect(f"/subforums/{subforum_id}/threads/{thread_id}")
 
-@app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>/messages/<int:message_id>/delete",
+@app.route("/subforums/<int:subforum_id>/threads/<int:thread_id>/messages/<int:message_id>/delete",
 methods=["GET", "POST"])
-def delete_message_post(sub_forum_id, thread_id, message_id):
+def delete_message_post(subforum_id, thread_id, message_id):
     if request.method == "GET":
         message = subforums.get_message(message_id)
         return render_template("delete_message.html", message=message,
-                               return_url=f"/subforums/{sub_forum_id}/threads/{thread_id}")
+                               return_url=f"/subforums/{subforum_id}/threads/{thread_id}")
 
     if request.method == "POST":
         subforums.delete_message(message_id)
-        return redirect(f"/subforums/{sub_forum_id}/threads/{thread_id}")
+        return redirect(f"/subforums/{subforum_id}/threads/{thread_id}")
 
 # Search messages route
 @app.route("/result")
