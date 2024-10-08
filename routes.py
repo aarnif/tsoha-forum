@@ -74,6 +74,8 @@ def logout():
 # Sub forum routes
 @app.route("/subforums/<int:subforum_id>")
 def sub_forum(subforum_id):
+    if not subforums.check_if_user_has_access_to_subforum(session["user_id"], subforum_id):
+        return redirect("/")
     subforum = subforums.get_subforum(subforum_id)
     return render_template("subforum.html", subforum=subforum)
 
@@ -113,6 +115,9 @@ def delete_subforum(subforum_id):
 # Thread routes
 @app.route("/subforums/<int:sub_forum_id>/threads/<int:thread_id>", methods=["GET", "POST"])
 def thread(sub_forum_id, thread_id):
+    if not subforums.check_if_user_has_access_to_subforum(session["user_id"], sub_forum_id):
+        return redirect("/")
+    
     if request.method == "POST":
         message_content = request.form["message-content"]
         subforums.add_message_to_thread(thread_id, session["user_id"], message_content)
