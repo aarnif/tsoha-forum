@@ -74,6 +74,7 @@ def delete_subforum(subforum_id):
 
 def get_thread(thread_id):
     result = db.session.execute(text("SELECT t.id as t_id, t.title AS title, m.id AS m_id, \
+                                     m.creator_id as m_creator_id, \
                                      username, m.content AS content, \
                                      TO_CHAR(m.created_at, 'DD-MM-YYYY HH24:MI') AS created_at, \
                                      TO_CHAR(m.updated_at, 'DD-MM-YYYY HH24:MI') AS updated_at \

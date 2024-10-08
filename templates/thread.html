@@ -11,6 +11,7 @@
   <div class="message-container">
     <ul class="message-top-items">
       <li>{{ message.created_at }}</li>
+      {% if message.m_creator_id == session.user_id or session.role == 1 %}
       <li>
         <a href="{{request.url}}/messages/{{message.m_id}}/update">
           <button class="delete-subforum-button">
@@ -42,6 +43,7 @@
             </svg></button
         ></a>
       </li>
+      {% endif %}
     </ul>
     <div class="message-content">{{ message.content }}</div>
     {% if message.created_at != message.updated_at %}
