@@ -46,7 +46,7 @@
                   <input type="text" name="search-word" />
                 </li>
                 <li class="nav-item">
-                  <a href="/logout" class="logout-link">Kirjaudu ulos</a>
+                  <a href="/logout">Kirjaudu ulos</a>
                 </li>
               </ul>
             </form>
@@ -55,7 +55,23 @@
         </div>
       </header>
       <main>
-        <div class="main-content">{% block content %} {% endblock %}</div>
+        <div class="main-content">
+          {% if session.username %}
+          <div class="navigation-tree">
+            <a href="/"><strong>Koti</strong></a> {% if 'subforums' in
+            request.path %} >>
+            <a href="/subforums/{{ session.subforum_id }}"
+              ><strong>{{session.subforum_name }}</strong></a
+            >
+            {% endif %} {% if 'threads' in request.path %} >>
+            <a
+              href="/subforums/{{ session.subforum_id }}/threads/{{ session.thread_id }}"
+              ><strong>{{ session.thread_title }}</strong></a
+            >
+            {% endif %}
+          </div>
+          {% endif %} {% block content %} {% endblock %}
+        </div>
       </main>
       <footer>
         <div class="footer-content">

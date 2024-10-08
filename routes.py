@@ -91,6 +91,8 @@ def logout():
 @check_subforum_access
 def sub_forum(subforum_id):
     subforum = subforums.get_subforum(subforum_id)
+    session["subforum_id"] = subforum_id
+    session["subforum_name"] = subforum[0].name
     return render_template("subforum.html", subforum=subforum)
 
 @app.route("/subforums/new", methods=["GET", "POST"])
@@ -136,6 +138,8 @@ def thread(subforum_id, thread_id):
         subforums.add_message_to_thread(thread_id, session["user_id"], message_content)
 
     thread = subforums.get_thread(thread_id)
+    session["thread_id"] = thread_id
+    session["thread_title"] = thread[0].title
     return render_template("thread.html", thread=thread, return_url= f"/subforums/{subforum_id}")
 
 @app.route("/subforums/<int:subforum_id>/threads/new", methods=["GET", "POST"])

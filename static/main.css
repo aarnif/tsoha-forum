@@ -131,3 +131,7 @@ button:active {
   padding: 10px;
   border-radius: 5px;
 }
+
+.navigation-tree {
+  padding: 10px;
+}
