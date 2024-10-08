@@ -40,6 +40,12 @@ def get_all_secret_subforums_by_user(user_id):
     secret_subforums = result.fetchall()
     return secret_subforums
 
+def check_if_subforum_is_secret(subforum_id):
+    result = db.session.execute(text("SELECT is_secret FROM subforums WHERE id = :subforum_id"),
+                                    {"subforum_id": subforum_id})
+    is_secret = result.fetchone()[0]
+    return is_secret
+
 def check_if_user_has_access_to_subforum(user_id, subforum_id):
     result = db.session.execute(text("SELECT * FROM subforum_access \
                                     WHERE user_id = :user_id AND subforum_id = :subforum_id"),

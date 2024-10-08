@@ -11,15 +11,15 @@ def check_if_user_is_logged_in():
 
     if not session.get("username"):
         return redirect('/login')
-    
+
 def check_subforum_access(f):
     @wraps(f)
     def check_function(subforum_id, *args, **kwargs):
-        if not subforums.check_if_user_has_access_to_subforum(session["user_id"], subforum_id) and session["role"] != 1:
-            return redirect("/")  
+        if subforums.check_if_subforum_is_secret(subforum_id) and session["role"] != 1:
+            if not subforums.check_if_user_has_access_to_subforum(session["user_id"], subforum_id):
+                return redirect("/")  
         return f(subforum_id, *args, **kwargs)
     return check_function
-
 
 @app.route("/")
 def index():
