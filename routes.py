@@ -1,7 +1,16 @@
-from flask import render_template, request, session, redirect
+from flask import render_template, request, session, redirect, url_for
 from app import app
 import users
 import subforums
+
+@app.before_request
+def check_if_user_is_logged_in():
+    if request.endpoint in ['login', 'register', 'static']:
+        return
+
+    if not session.get("username"):
+        return redirect('/login')
+
 
 @app.route("/")
 def index():
@@ -76,6 +85,7 @@ def logout():
 def sub_forum(subforum_id):
     if not subforums.check_if_user_has_access_to_subforum(session["user_id"], subforum_id):
         return redirect("/")
+    
     subforum = subforums.get_subforum(subforum_id)
     return render_template("subforum.html", subforum=subforum)
 
