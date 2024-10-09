@@ -13,3 +13,13 @@ const displayErrorMessageBox = () => {
   }
 };
 displayErrorMessageBox();
+
+const toggleDisplayUserList = () => {
+  const isSecret = document.querySelector("select");
+  const userList = document.getElementById("user-list");
+  if (isSecret.value == 1) {
+    userList.style.display = "block";
+  } else {
+    userList.style.display = "none";
+  }
+};
