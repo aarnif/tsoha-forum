@@ -55,8 +55,8 @@
       {% endif %}
     </li>
 
-    {% if thread.t_creator_id == session.user_id %}
     <li id="update-thread" class="thread-item">
+      {% if thread.t_creator_id == session.user_id %}
       <a href="/subforums/{{thread.sf_id}}/threads/{{thread.t_id}}/update">
         <button class="delete-subforum-button">
           <svg
@@ -71,8 +71,10 @@
           </svg>
         </button>
       </a>
+      {% endif %}
     </li>
     <li id="delete-thread" class="thread-item">
+      {% if thread.t_creator_id == session.user_id %}
       <a href="/subforums/{{thread.sf_id}}/threads/{{thread.t_id}}/delete">
         <button class="delete-thread-button">
           <svg
@@ -87,8 +89,8 @@
           </svg>
         </button>
       </a>
+      {% endif %}
     </li>
-    {% endif %}
   </ul>
 </div>
 {% endfor %} {% endblock %}
