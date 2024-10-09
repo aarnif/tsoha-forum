@@ -34,6 +34,13 @@
   --button-hover-background-color: #1e40af;
   --button-text-color: #bfdbfe;
 
+  --add-button-background-color: #eff6ff;
+  --add-button-hover-background-color: #3b82f6;
+  --add-button-border-color: #3b82f6;
+
+  --add-button-icon-color: #3b82f6;
+  --add-button-icon-hover-color: white;
+
   --message-items-container-background-color: #ffffff;
 
   --profile-image-container-background-color: #60a5fa;
@@ -121,6 +128,35 @@ button:active {
   transform: scale(0.95);
 }
 
+.add-button {
+  padding: 8px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 9999px;
+  background-color: var(--body-background-color);
+  border: 3px solid var(--add-button-border-color);
+}
+
+.add-button:hover {
+  background-color: var(--add-button-hover-background-color);
+}
+
+.add-button:active {
+  transform: scale(0.95);
+}
+
+.add-button-icon {
+  color: var(--add-button-icon-color);
+  fill: currentColor;
+}
+
+.add-button:hover .add-button-icon {
+  color: var(--add-button-icon-hover-color);
+}
+
 #error-message-box {
   display: none;
 }
@@ -134,4 +170,5 @@ button:active {
 
 .navigation-tree {
   padding: 10px;
+  padding-left: 20px;
 }
