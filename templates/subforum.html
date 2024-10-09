@@ -19,7 +19,9 @@
   </div>
 </div>
 
-{% for thread in subforum %}
+{% if subforum|length == 1 and subforum[0].t_id == None %}
+<h3 class="no-threads-title">Alueella ei ole vielä ketjuja.</h3>
+{% else %} {% for thread in subforum %}
 <div class="thread-items-container">
   <ul class="thread-items">
     <li id="thread-icon-container" class="thread-item">
@@ -93,4 +95,4 @@
     </li>
   </ul>
 </div>
-{% endfor %} {% endblock %}
+{% endfor %} {% endif %} {% endblock %}

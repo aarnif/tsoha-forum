@@ -46,6 +46,11 @@ main {
   padding: 10px;
 }
 
+.no-threads-title {
+  padding-left: 30px;
+  font-weight: 500;
+}
+
 .subforum-items-container,
 .thread-items-container,
 .message-items-container,
