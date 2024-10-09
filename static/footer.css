@@ -21,8 +21,8 @@ footer {
 
 .footer-content {
   flex-grow: 1;
-  width: 100%; /* Make sure the content spans the full width */
-  height: 100%; /* Make sure the content spans the full height */
+  width: 100%;
+  height: 100%;
   max-width: 1400px;
   display: flex;
   justify-content: center;
