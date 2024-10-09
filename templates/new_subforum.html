@@ -4,6 +4,9 @@
   <form action="{{request.url}}" method="POST" class="form">
     <h2>Luo uusi alue</h2>
     <ul class="form-items">
+      <li id="error-message-box" class="form-item">
+        <p class="error-message">{{ message }}</p>
+      </li>
       <li class="form-item">
         <label>Nimi:</label>
       </li>
@@ -39,30 +42,17 @@
         <textarea name="description" rows="8" cols="40"></textarea>
       </li>
       <li class="form-item">
-        <button type="button" class="form-button">
-          <a href="/">Peruuta</a>
-        </button>
+        <a href="/">
+          <button type="button" class="form-button">Peruuta</button></a
+        >
       </li>
       <li class="form-item">
         <button type="submit" class="form-button">Luo Alue</button>
-      </li>
-      <li class="form-item">
-        <p>{{ message }}</p>
       </li>
     </ul>
   </form>
 </div>
 
-<script>
-  const toggleDisplayUserList = () => {
-    const isSecret = document.querySelector("select");
-    const userList = document.getElementById("user-list");
-    if (isSecret.value == 1) {
-      userList.style.display = "block";
-    } else {
-      userList.style.display = "none";
-    }
-  };
-</script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
 
 {% endblock %}

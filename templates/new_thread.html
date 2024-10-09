@@ -4,6 +4,9 @@
   <form action="{{request.url}}" method="POST" class="form">
     <h2>Luo uusi ketju</h2>
     <ul class="form-items">
+      <li id="error-message-box" class="form-item">
+        <p class="error-message">{{ message }}</p>
+      </li>
       <li class="form-item">
         <label>Otsikko:</label>
       </li>
@@ -20,18 +23,16 @@
       </li>
 
       <li class="form-item">
-        <button type="button" class="form-button">
-          <a href="{{return_url}}">Peruuta</a>
-        </button>
+        <a href="{{return_url}}">
+          <button type="button" class="form-button">Peruuta</button></a
+        >
       </li>
       <li class="form-item">
         <button type="submit" class="form-button">Luo Ketju</button>
       </li>
-      <li class="form-item">
-        <p>{{ message }}</p>
-      </li>
     </ul>
   </form>
 </div>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
 
 {% endblock %}
