@@ -66,6 +66,11 @@
       </li>
       <li class="form-item">
         <button type="submit" class="form-button">Lähetä</button>
+        <input
+          type="hidden"
+          name="csrf_token"
+          value="{{ session.csrf_token }}"
+        />
       </li>
       <li class="form-item">
         <a href="{{return_url}}"

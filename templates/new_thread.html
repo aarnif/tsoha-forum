@@ -29,6 +29,11 @@
       </li>
       <li class="form-item">
         <button type="submit" class="form-button">Luo Ketju</button>
+        <input
+          type="hidden"
+          name="csrf_token"
+          value="{{ session.csrf_token }}"
+        />
       </li>
     </ul>
   </form>

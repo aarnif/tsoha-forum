@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import render_template, request, session, redirect, url_for
+from flask import render_template, request, session, redirect, abort
 from app import app
 import users
 import subforums
@@ -102,6 +102,8 @@ def new_subforum_post():
         return render_template("new_subforum.html", basic_users=basic_users)
 
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         name = request.form["name"]
         description = request.form["description"]
         is_secret = request.form["is-secret"]
@@ -125,6 +127,8 @@ def delete_subforum(subforum_id):
         return render_template("delete_subforum.html", subforum=subforum)
 
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         subforums.delete_subforum(subforum_id)
         return redirect("/")
 
@@ -134,6 +138,8 @@ def delete_subforum(subforum_id):
 @check_subforum_access
 def thread(subforum_id, thread_id):
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         message_content = request.form["message-content"]
         subforums.add_message_to_thread(thread_id, session["user_id"], message_content)
 
@@ -148,6 +154,8 @@ def new_thread(subforum_id):
         return render_template("new_thread.html", return_url=f"/subforums/{subforum_id}")
 
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         title = request.form["title"]
         message_content = request.form["message-content"]
 
@@ -175,6 +183,8 @@ def update_thread(subforum_id, thread_id):
                                thread=thread, return_url=return_url, message="")
 
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         title = request.form["title"]
 
         if len(title) < 6 or len(title) > 30:
@@ -198,6 +208,8 @@ def delete_thread_post(subforum_id, thread_id):
                                return_url=f"/subforums/{subforum_id}")
 
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         subforums.delete_thread(thread_id)
         return redirect(f"/subforums/{subforum_id}")
 
@@ -212,6 +224,8 @@ def update_message_post(subforum_id, thread_id, message_id):
                                return_url=f"/subforums/{subforum_id}/threads/{thread_id}")
 
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         message_content = request.form["message-content"]
         subforums.update_message(message_id, message_content)
         return redirect(f"/subforums/{subforum_id}/threads/{thread_id}")
@@ -225,6 +239,8 @@ def delete_message_post(subforum_id, thread_id, message_id):
                                return_url=f"/subforums/{subforum_id}/threads/{thread_id}")
 
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         subforums.delete_message(message_id)
         return redirect(f"/subforums/{subforum_id}/threads/{thread_id}")
 
