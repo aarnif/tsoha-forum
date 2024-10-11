@@ -41,12 +41,18 @@ main {
 }
 
 .subforums-title,
+.secret-subforums-title,
 .subforum-title,
 .thread-title {
   padding: 10px;
 }
 
-.no-threads-title {
+.secret-subforums-title {
+  padding-left: 20px;
+}
+
+.no-threads-title,
+.no-messages-title {
   padding-left: 30px;
   font-weight: 500;
 }

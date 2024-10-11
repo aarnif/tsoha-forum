@@ -2,7 +2,9 @@
 
 <h2 class="thread-title">{{ thread[0].title }}</h2>
 
-{% for message in thread %}
+{% if thread|length == 1 and thread[0].m_id == None %}
+<h3 class="no-messages-title">Ketjussa ei ole vielä viestejä.</h3>
+{% else %} {% for message in thread %}
 <div class="message-items-container">
   <div id="profile-image-container" class="thread-item">
     <div class="profile-image"></div>
@@ -53,7 +55,7 @@
     {% endif %}
   </div>
 </div>
-{% endfor %}
+{% endfor %} {% endif %}
 
 <div id="message-form-container" class="form-container">
   <form action="{{request.url}}" method="POST" id="message-form" class="form">
