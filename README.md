@@ -13,16 +13,21 @@ Sovelluksessa näkyy keskustelualueita, joista jokaisella on tietty aihe. Alueil
 - [x] Ylläpitäjä voi lisätä ja poistaa keskustelualueita.
 - [x] Ylläpitäjä voi luoda salaisen alueen ja määrittää, keillä käyttäjillä on pääsy alueelle.
 
-## Sovelluksen tilanne:
+## Sovelluksessa käytetyt teknologiat:
 
-Yllä olevat ominaisuudet on tehty ja sovellus on viimeistelyä vaille valmis.
+- Flask
+- PostgreSQL
+- HTML
+- CSS
+- JavaScript
+- Ikonit: [Font Awesome](https://fontawesome.com/)
 
 ## Sovelluksen demo:
 
 Sovellus on testattavissa:
 
 [https://tsoha-forum.onrender.com](https://tsoha-forum.onrender.com)\
-(Saattaa kestää useita minuutteja käynnistyä...)
+(Palvelimella saattaa kestää useita minuutteja käynnistyä...)
 
 Admin-tunnukset:\
 username: admin\
